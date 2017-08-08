@@ -75,5 +75,23 @@ public class Student extends LinkedList<String>{
     {
         return time;
     }
+    
+    /**
+     * this method is used to get the String of Student's infomaton
+     */
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append(major);
+        builder.append(", ");
+        builder.append(hobby);
+        builder.append(", ");
+        builder.append(state);
+        builder.append(", ");
+        builder.append(rowNumber);
+        builder.append(", ");
+        builder.append(time);
+        return builder.toString();
+    }
    
 }

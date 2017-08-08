@@ -63,4 +63,14 @@ public class StudentTest extends TestCase{
         assertEquals("6/12/2016 10:22:25", wendy.getTime());
     }
     
+    /**
+     * this method is used to test the toString method 
+     */
+    public void testToString()
+    {
+        String str = "Computer Science, read, Northeast US, "
+                + "7, 6/12/2016 10:22:25";
+        assertEquals(str, wendy.toString());
+    }
+    
 }
