@@ -8,7 +8,7 @@ package musicsurvey;
  * @version 2017.08.05
  *
  */
-public class Song extends Category {
+public class Song extends Category{
 
     // this is the fields.........................
     private String songName;
@@ -96,91 +96,27 @@ public class Song extends Category {
     public Dimension getDimension(String str) {
         if (str == "major") {
             return major;
-        } else if (str == "hobby") {
+        } 
+        else if (str == "hobby") {
             return hobby;
-        } else {
+        } 
+        else {
             return location;
         }
     }
-
-    /**
-     * @return
-     */
-    public double getPercentLike(String str) {
-        // hobby.....................
-        if (str == "read") {
-            return this.getDimension("hobby").getCategory(1).getNumbeOfLikes() / totalNumber;
-        } else if (str == "art") {
-            return this.getDimension("hobby").getCategory(2).getNumbeOfLikes() / totalNumber;
-        } else if (str == "sports") {
-            return this.getDimension("hobby").getCategory(3).getNumbeOfLikes() / totalNumber;
-        } else if (str == "music") {
-            return this.getDimension("hobby").getCategory(4).getNumbeOfLikes() / totalNumber;
-        }
-
-        // major..........................
-        if (str == "Computer Science") {
-            return this.getDimension("major").getCategory(1).getNumbeOfLikes() / totalNumber;
-        } else if (str == "Other Engineering") {
-            return this.getDimension("major").getCategory(2).getNumbeOfLikes() / totalNumber;
-        } else if (str == "Math or CMDA") {
-            return this.getDimension("major").getCategory(3).getNumbeOfLikes() / totalNumber;
-        } else if (str == "Other") {
-            return this.getDimension("major").getCategory(4).getNumbeOfLikes() / totalNumber;
-        }
-
-        // locaton.............................
-        if (str == "Northeast US") {
-            return this.getDimension("location").getCategory(1).getNumbeOfLikes() / totalNumber;
-        } else if (str == "Southeast US") {
-            return this.getDimension("location").getCategory(2).getNumbeOfLikes() / totalNumber;
-        } else if (str == "the rest of US") {
-            return this.getDimension("location").getCategory(3).getNumbeOfLikes() / totalNumber;
-        } else //if (str == "outside the US") 
-            {
-            return this.getDimension("location").getCategory(4).getNumbeOfLikes() / totalNumber;
-        }
+        
+        /**
+         * this method is used to return a string 
+         */
+        public String toString() {
+        
+            String ans = "Song Name: " + getSongName() + "\n"
+                    + "Song Artist: " + getArtist() + "\n"
+                    + "Song Genre: " + getGenre() + "\n"
+                    + "Song Year: " + getYear();
+            return ans;
+        
     }
-
-    /**
-     * @return
-     * 
-     *         still need to divide something
-     */
-    public double getPercentHeard(String str) {
-        // hobby..........................
-        if (str == "read") {
-            return this.getDimension("hobby").getCategory(1).getPercentHeard() / totalNumber;
-        } else if (str == "art") {
-            return this.getDimension("hobby").getCategory(2).getNumbeOfHeard() / totalNumber;
-        } else if (str == "sports") {
-            return this.getDimension("hobby").getCategory(3).getPercentHeard() / totalNumber;
-        } else if (str == "music") {
-            return this.getDimension("hobby").getCategory(4).getNumbeOfHeard() / totalNumber;
-        }
-
-        // major..................................
-        if (str == "Computer Science") {
-            return this.getDimension("major").getCategory(1).getPercentHeard() / totalNumber;
-        } else if (str == "Other Engineering") {
-            return this.getDimension("major").getCategory(2).getNumbeOfHeard() / totalNumber;
-        } else if (str == "Math or CMDA") {
-            return this.getDimension("major").getCategory(3).getPercentHeard() / totalNumber;
-        } else if (str == "Other") {
-            return this.getDimension("major").getCategory(4).getNumbeOfHeard() / totalNumber;
-        }
-
-        // location................................
-        if (str == "Northeast US") {
-            return this.getDimension("location").getCategory(1).getPercentHeard() / totalNumber;
-        } else if (str == "Southeast US") {
-            return this.getDimension("location").getCategory(2).getNumbeOfHeard() / totalNumber;
-        } else if (str == "the rest of US") {
-            return this.getDimension("location").getCategory(3).getPercentHeard() / totalNumber;
-        } else //if (str == "outside the US") 
-            {
-            return this.getDimension("location").getCategory(4).getNumbeOfHeard() / totalNumber;
-        }
-    }
+        
 
 }

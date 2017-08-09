@@ -19,7 +19,7 @@ public class Dimension {
     /**
      * this is the constructor
      */
-    public Dimension(Category category1, Category category2, Category category3, Category category4) {
+        public Dimension(Category category1, Category category2, Category category3, Category category4) {
         this.category1 = category1;
         this.category2 = category2;
         this.category3 = category3;
