@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Comparator;
 import java.util.Observable;
 
@@ -18,7 +19,7 @@ import javax.media.NoDataSourceException;
  * @author sampe
  *
  */
-public class GraphSolver extends Observable {
+public class GraphSolver {
 
     private LinkedList<Song> playList;
     private int pageCounter;
@@ -29,21 +30,16 @@ public class GraphSolver extends Observable {
 
         try {
             this.songFile = new BufferedReader(new FileReader(songFile));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             this.surveyFile = new BufferedReader(new FileReader(surveyFile));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
         playList = new LinkedList<Song>();
-        pageCounter = 1;
+        pageCounter = 0;
     }
 
-    public String[] readSurveyFile(int index) {
+    private String[] readSurveyFile(int index) {
         String line = "";
 
         try {
@@ -76,7 +72,7 @@ public class GraphSolver extends Observable {
         }
         return null;
     }
-    public String[] readSongFile(boolean firstRow) {
+    private String[] readSongFile(boolean firstRow) {
         String line = "";
 
         try {
@@ -113,18 +109,19 @@ public class GraphSolver extends Observable {
         readSongFile(true);
         String[] newSong = readSongFile(false);
         try {
-        if (newSong != null) {
-            while (newSong != null) {
-                int year = Integer.parseInt(newSong[2]);
-                playList.add(
-                        new Song(newSong[0], newSong[3], year, newSong[1]));
-                newSong = readSongFile(false);
+            if (newSong != null) {
+                while (newSong != null) {
+                    int year = Integer.parseInt(newSong[2]);
+                    playList.add(
+                            new Song(newSong[0], newSong[1], newSong[3], year));
+                    newSong = readSongFile(false);
+                }
+            }
+            else {
+                throw new NoDataSourceException();
             }
         }
-        else {
-            throw new NoDataSourceException();
-        }
-        } catch (NoDataSourceException e) {
+        catch (NoDataSourceException e) {
             e.printStackTrace();
         }
     }
@@ -141,23 +138,23 @@ public class GraphSolver extends Observable {
 
     }
     private void upDateSong(Student student) {
-        for (int i = 0; i < playList.getLength(); i++) {
+        for (int i = 0; i < playList.size(); i++) {
 
             String dim = "hobby";
             if (student.getHobby() == "reading") {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(1)
+                    playList.get(i).getDimension(dim).getCategory(1)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(1)
+                    playList.get(i).getDimension(dim).getCategory(1)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(1)
+                    playList.get(i).getDimension(dim).getCategory(1)
                             .upDateLike();
                 }
 
@@ -166,16 +163,16 @@ public class GraphSolver extends Observable {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(2)
+                    playList.get(i).getDimension(dim).getCategory(2)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(2)
+                    playList.get(i).getDimension(dim).getCategory(2)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(2)
+                    playList.get(i).getDimension(dim).getCategory(2)
                             .upDateLike();
                 }
             }
@@ -183,16 +180,16 @@ public class GraphSolver extends Observable {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(3)
+                    playList.get(i).getDimension(dim).getCategory(3)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(3)
+                    playList.get(i).getDimension(dim).getCategory(3)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(3)
+                    playList.get(i).getDimension(dim).getCategory(3)
                             .upDateLike();
                 }
             }
@@ -200,16 +197,16 @@ public class GraphSolver extends Observable {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(4)
+                    playList.get(i).getDimension(dim).getCategory(4)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(4)
+                    playList.get(i).getDimension(dim).getCategory(4)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(4)
+                    playList.get(i).getDimension(dim).getCategory(4)
                             .upDateLike();
                 }
             }
@@ -223,16 +220,16 @@ public class GraphSolver extends Observable {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(1)
+                    playList.get(i).getDimension(dim).getCategory(1)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(1)
+                    playList.get(i).getDimension(dim).getCategory(1)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(1)
+                    playList.get(i).getDimension(dim).getCategory(1)
                             .upDateLike();
                 }
 
@@ -240,17 +237,17 @@ public class GraphSolver extends Observable {
             else if (student.getMajor() == "Computer Science") {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(2)
+                if (answer.contentEquals("Yes")) {
+                    playList.get(i).getDimension(dim).getCategory(2)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(2)
+                    playList.get(i).getDimension(dim).getCategory(2)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(2)
+                    playList.get(i).getDimension(dim).getCategory(2)
                             .upDateLike();
                 }
             }
@@ -258,16 +255,16 @@ public class GraphSolver extends Observable {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(3)
+                    playList.get(i).getDimension(dim).getCategory(3)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(3)
+                    playList.get(i).getDimension(dim).getCategory(3)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(3)
+                    playList.get(i).getDimension(dim).getCategory(3)
                             .upDateLike();
                 }
             }
@@ -275,16 +272,16 @@ public class GraphSolver extends Observable {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(4)
+                    playList.get(i).getDimension(dim).getCategory(4)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(4)
+                    playList.get(i).getDimension(dim).getCategory(4)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(4)
+                    playList.get(i).getDimension(dim).getCategory(4)
                             .upDateLike();
                 }
             }
@@ -298,16 +295,16 @@ public class GraphSolver extends Observable {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(1)
+                    playList.get(i).getDimension(dim).getCategory(1)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(1)
+                    playList.get(i).getDimension(dim).getCategory(1)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(1)
+                    playList.get(i).getDimension(dim).getCategory(1)
                             .upDateLike();
                 }
 
@@ -316,16 +313,16 @@ public class GraphSolver extends Observable {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(2)
+                    playList.get(i).getDimension(dim).getCategory(2)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(2)
+                    playList.get(i).getDimension(dim).getCategory(2)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(2)
+                    playList.get(i).getDimension(dim).getCategory(2)
                             .upDateLike();
                 }
             }
@@ -334,16 +331,16 @@ public class GraphSolver extends Observable {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(3)
+                    playList.get(i).getDimension(dim).getCategory(3)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(3)
+                    playList.get(i).getDimension(dim).getCategory(3)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(3)
+                    playList.get(i).getDimension(dim).getCategory(3)
                             .upDateLike();
                 }
             }
@@ -351,16 +348,16 @@ public class GraphSolver extends Observable {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
                 if (answer == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(4)
+                    playList.get(i).getDimension(dim).getCategory(4)
                             .upDateHeard();
                 }
                 else {
-                    playList.getEntry(i).getDimension(dim).getCategory(4)
+                    playList.get(i).getDimension(dim).getCategory(4)
                             .upDateTotal();
                 }
 
                 if (answer2 == "Yes") {
-                    playList.getEntry(i).getDimension(dim).getCategory(4)
+                    playList.get(i).getDimension(dim).getCategory(4)
                             .upDateLike();
                 }
             }
@@ -384,12 +381,43 @@ public class GraphSolver extends Observable {
             e.printStackTrace();
         }
     }
-    
+
     public void sortSongs(String dimension) {
         if (dimension == "Song") {
-            Comparator<Song> sort = new SongComparator();
             Collections.sort(playList, new SongComparator());
         }
+        else if (dimension == "Artist") {
+            Collections.sort(playList, new ArtistComparator());
+        }
+        else if (dimension == "Genre") {
+            Collections.sort(playList, new GenreComparator());
+        }
+        else {
+            Collections.sort(playList, new YearComparator());
+        }
+    }
+
+    public void flipPage(boolean direction) {
+        if (direction) {
+            pageCounter++;
+        }
+
+        else {
+            pageCounter--;
+        }
+    }
+
+    public int getPage() {
+        return pageCounter;
+    }
+
+    public double getPercentLike(int index, String dimension, int category) {
+        return this.getPlayList().get(index).getDimension(dimension)
+                .getCategory(category).getPercentLike();
+    }
+
+    public LinkedList<Song> getPlayList() {
+        return playList;
     }
 
 }
