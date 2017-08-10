@@ -9,7 +9,7 @@ import CS2114.Window;
 import CS2114.WindowSide;
 
 /**
- * @author zichen
+ * @author hythams8
  *
  */
 public class DisplayWindow {
@@ -118,6 +118,40 @@ public class DisplayWindow {
     public void clickedQuit(Button button) {
         System.exit(0);
     }
+    /**
+     * this method gets the next nine songs
+     */
+    public void getNextNineSongs() {
+       
+        window.removeAllShapes();
+        fillWindow();
+        }if(solver.getPage()*(9)+(9))==0)
+
+    {
+        nextButton.disable();
+    }if(solver.getPage==0)previousButton.disable();if(solver.getPage()*(9)+(9))!=0)&&(solver.getPage!=0)
+    {
+            nextButton.enable();
+            previousButton.enable();
+        }
+    }
+
+    /**
+     * this method gets the previous nine songs
+     */
+    public Song[] getPrevNineSongs() {
+        window.removeAllShapes();
+        fillWindow();
+        }if(solver.getPage()*(9)+(9))==0)
+
+    {
+        previousButton.disable();
+    }if(solver.getPage==0)nextButton.disable();if(solver.getPage()*(9)+(9))!=0)&&(solver.getPage!=0)
+    {
+        previousButton.enable();
+        nextButton.enable();
+    }
+}
 
         
 }
