@@ -4,6 +4,7 @@
 package musicsurvey;
 
 import CS2114.Button;
+import CS2114.Shape;
 import CS2114.Window;
 import CS2114.WindowSide;
 
@@ -24,6 +25,9 @@ public class DisplayWindow {
     private Button dateButton;
     private Button nextButton;
     private Button previousButton;
+    private Button quitButton;
+    private Shape title;
+    private GraphSolver solver;
     
     /**
      * this is the constructor forDisPlayWindow
@@ -38,40 +42,47 @@ public class DisplayWindow {
      */
         previousButton = new Button("<- Prev");
         window.addButton(previousButton, WindowSide.NORTH); 
-        previousButton.onClick(this, "generateGlyphs");
+        previousButton.onClick(this, "clickedPrevious");
         previousButton.disable();
         
         nextButton = new Button("Next ->");
         window.addButton(nextButton, WindowSide.NORTH);
-        nextButton.onClick(this, "generateGlyphs");
+        nextButton.onClick(this, "clickedNext");
         
         artistButton = new Button("Sort by Artist Name");
         window.addButton(artistButton, WindowSide.NORTH);
-        artistButton.onClick(this, "generateGlyphs");
+        artistButton.onClick(this, "clickedArtist");
         
         titleButton = new Button("Sort by Song Name");
         window.addButton(titleButton, WindowSide.NORTH);
-        titleButton.onClick(this, "generateGlyphs");
+        titleButton.onClick(this, "clickedTitle");
         
         dateButton = new Button("Sort by Release Year");
         window.addButton(dateButton, WindowSide.NORTH);
-        dateButton.onClick(this, "generateGlyphs");
+        dateButton.onClick(this, "clickedDate");
         
         genreButton = new Button("Sort by Genre");
         window.addButton(genreButton, WindowSide.NORTH);
-        genreButton.onClick(this, "generateGlyphs");
+        genreButton.onClick(this, "clickedgenre");
         
         hobbyButton = new Button("Represent Hobby");
         window.addButton(hobbyButton, WindowSide.SOUTH);
-        hobbyButton.onClick(this, "generateGlyphs");
+        hobbyButton.onClick(this, "clickedHobby");
         
         majorButton = new Button("Represent Major");
         window.addButton(majorButton, WindowSide.SOUTH);
-        majorButton.onClick(this, "generateGlyphs");
+        majorButton.onClick(this, "clickedMajor");
         
         locationButton = new Button("Represent Region");
         window.addButton(locationButton, WindowSide.SOUTH);
-        locationButton.onClick(this, "generateGlyphs");
+        locationButton.onClick(this, "generatelocation");
+        
+        Button quitButton = new Button("Quit");
+        window.addButton(quitButton, WindowSide.NORTH);
+        quitButton.onClick(this, "clickedQuit");
+        
+        
+        window.setTitle("Music Preference Visualization");
 
     }
     
@@ -82,14 +93,7 @@ public class DisplayWindow {
     {
         return window;
     }
-    
-    /**
-     * this method is used to make the clickedMajor
-     */
-    public void clickedMajor()
-    {}
-        
-    
+
     
     /**
      * this method is used to move song
@@ -106,6 +110,14 @@ public class DisplayWindow {
     {
         
     }
-
     
+    /**
+     * clickedQuit(Button button) call System.exit() with a zero for its parameter.
+     * This means there was no errors.
+     */
+    public void clickedQuit(Button button) {
+        System.exit(0);
+    }
+
+        
 }
