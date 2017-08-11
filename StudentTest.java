@@ -20,7 +20,7 @@ public class StudentTest extends TestCase{
     public void setUp()
     {
         wendy = new Student("Computer Science", "read", "Northeast US", 
-                7, "6/12/2016 10:22:25");
+                "7", "6/12/2016 10:22:25");
     }
     
     /**
@@ -52,7 +52,7 @@ public class StudentTest extends TestCase{
      */
     public void testGetRowNumber()
     {
-        assertEquals(7, wendy.getRowNumber());
+        assertEquals("7", wendy.getRowNumber());
     }
     
     /**

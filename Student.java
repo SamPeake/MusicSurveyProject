@@ -15,14 +15,14 @@ public class Student extends LinkedList<String>{
     private String major;
     private String hobby;
     private String state;
-    private int rowNumber;
+    private String rowNumber;
     private String time;
     
     /**
      * this is the constructor
      */
     public Student(String major, String hobby, 
-            String state, int rowNumber, String time)
+            String state, String rowNumber, String time)
     {
         this.major = major;
         this.hobby = hobby;
@@ -62,7 +62,7 @@ public class Student extends LinkedList<String>{
      * this method is used to return the hobby
      * @return rowNumber this is what it is use for 
      */
-    public int getRowNumber()
+    public String getRowNumber()
     {
         return rowNumber;
     }

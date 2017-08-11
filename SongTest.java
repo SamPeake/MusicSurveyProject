@@ -20,11 +20,15 @@ public class SongTest extends TestCase {
     private Category Engi;
     private Category Other;
     private Student wendy;
-    private Dimension dimension1; 
+    private Dimension dimension1;
     private Category read;
     private Category art;
     private Category sports;
     private Category music;
+    private Category location1;
+    private Category location2;
+    private Category location3;
+    private Category location4;
 
     // private Dimension dimension1;
 
@@ -32,16 +36,13 @@ public class SongTest extends TestCase {
      * this is the setUp
      */
     public void setUp() {
-        song1 = new Song("CallMeMaybe", "pop", 2011, "Carly");
-        //major = new Dimension(Math, CS, Engi, Other);
-        dimension1 = new Dimension(read, art, sports, music);
-        
+        song1 = new Song("CallMeMaybe", "Carly", "pop", "2011");
+        // major = new Dimension(Math, CS, Engi, Other);
+        hobby = new Dimension(read, art, sports, music);
+        location = new Dimension(location1, location2, location3, location4);
+        major = new Dimension(Math, CS, Engi, Other);
+        wendy = new Student("Math", "read", "Northeast US", "7", "6/12/2016 10:22:25");
 
-        wendy = new Student("Math", "read", "Northeast US", 7, "6/12/2016 10:22:25");
-        //Math = major.getCategory(1);
-        //CS = major.getCategory(2);
-        //Engi = major.getCategory(3);
-        //Other = major.getCategory(4);
     }
 
     /**
@@ -62,7 +63,7 @@ public class SongTest extends TestCase {
      * this method is used to test the year
      */
     public void testGetYear() {
-        assertEquals(2011, song1.getYear());
+        assertEquals("2011", song1.getYear());
     }
 
     /**
@@ -73,30 +74,11 @@ public class SongTest extends TestCase {
     }
 
     /**
-     * this method is used to test the the get column heard
-     */
-    //public void testGetColumnHeard() {
-        //assertEquals(1, song1.getColumnHeard());
-    //}
-
-    /**
-     * this method is used to test the the get column heard
-     */
-    //public void testGetColumnLike() {
-        //assertEquals(2, song1.getColumnLike());
-    //}
-
-    /**
      * THIS METHOD IS to test the getDimension class
      */
     public void testGetDimension() {
-        //assertEquals(read, song1.getDimension("major").getCategory(1));
-        //assertEquals(major, song1.getDimension("major"));
-        assertEquals(major, song1.getDimension("major"));
-        assertEquals(hobby, song1.getDimension("hobby"));
-        assertEquals(location, song1.getDimension("location"));
-        assertEquals(major, song1.getDimension("oliver"));
-        assertEquals(read, dimension1.getCategory(1));
+        assertEquals(Math, song1.getDimension("major").getCategory(1));
+       
     }
 
     /**
@@ -105,31 +87,21 @@ public class SongTest extends TestCase {
     public void testToString() {
         String str = "Song Name: CallMeMaybe" + "\n" + "Song Artist: Carly" + "\n" + "Song Genre: pop" + "\n"
                 + "Song Year: 2011";
-        // System.out.println(song1.toString());
         assertEquals(str, song1.toString());
     }
-    
-    /**
-     * this method is used to test the getCategory
-     */
-    public void testGetCategory()
-    {
-        assertEquals(read, dimension1.getCategory(1));
-        assertEquals(art, dimension1.getCategory(2));
-        assertEquals(sports, dimension1.getCategory(3));
-        assertEquals(music, dimension1.getCategory(4));
-    }
-    
+
+  
     /**
      * this method is used to test the getDimension
      */
-    public void testGetDimension1()
-    {
+    public void testGetDimension1() {
         assertEquals(major, song1.getDimension(1));
         assertEquals(hobby, song1.getDimension(2));
         assertEquals(location, song1.getDimension(3));
         assertEquals(major, song1.getDimension(4));
-        
+
     }
+    
+   
 
 }

@@ -17,7 +17,7 @@ import javax.media.NoDataSourceException;
 
 /**
  * @author sampe
- *
+ * this is the graphSolver class
  */
 public class GraphSolver {
 
@@ -25,7 +25,11 @@ public class GraphSolver {
     private int pageCounter;
     private String songFile;
     private String surveyFile;
-
+/**
+ * this is the constructor
+ * @param songFile is the file of songs 
+ * @param surveyFile is the files of Files
+ */
     public GraphSolver(String songFile, String surveyFile) {
 
         this.songFile = songFile;
@@ -35,6 +39,11 @@ public class GraphSolver {
         pageCounter = 0;
     }
 
+    /**
+     * 
+     * @return students that is the 
+     * @version 2017.08.11
+     */
     private LinkedList<Student> readSurveyFile() {
         int index = 0;
         String line = "";
@@ -80,47 +89,49 @@ public class GraphSolver {
         }
         return null;
     }
+    
+    /**
+     * this is the songFile reader
+     */
     private void readSongFile() {
         String line = "";
         int index = 0;
-
         try (BufferedReader br = new BufferedReader(
                 new FileReader(this.songFile))) {
-
             while ((line = br.readLine()) != null) {
                 String[] responses;
                 // just reading the first row with the column names
                 if (index == 0) {
-
                     responses = null;
-
                 }
                 // survey responses ,
-              
                 // everything
-
                 else {
                     responses = line.split(",", -1);
                     playList.add(new Song(responses[0], responses[1], responses[3],
                             responses[2]));
-
-                }
-
-                
-
+                } 
                 index++;
             }
-           
-
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * this is the makePlistList which is the public version of the 
+     * make playList
+     */
     public void makePlayList() {
         readSongFile();
     }
+    
+    /**
+     * 
+     * @param row is the row of 
+     * @return newStudent is the type that we get 
+     */
     private Student makeStudent(String[] row) {
 
         //int rowNumber = Integer.parseInt(row[0]);
@@ -132,6 +143,11 @@ public class GraphSolver {
         return newStudent;
 
     }
+    
+    /**
+     * this is the upDateSong class
+     * @param student is the sum
+     */
     private void upDateSong(Student student) {
         for (int i = 0; i < playList.size(); i++) {
 
@@ -373,6 +389,9 @@ public class GraphSolver {
 
     }
 
+    /**
+     * this is the upDatePlayList
+     */
     public void upDatePlayList() {
 
         try {
@@ -389,6 +408,10 @@ public class GraphSolver {
         }
     }
 
+    /**
+     * this is class which can sort the songs 
+     * @param dimension is the dimension 
+     */
     public void sortSongs(String dimension) {
         if (dimension.equals("Song")) {
             Collections.sort(playList, new SongComparator());
@@ -404,6 +427,10 @@ public class GraphSolver {
         }
     }
 
+    /**
+     * this is the class that used to flip the page
+     * @param direction
+     */
     public void flipPage(boolean direction) {
         if (direction) {
             pageCounter++;
@@ -414,23 +441,49 @@ public class GraphSolver {
         }
     }
 
+    /**
+     * this is class that getPage
+     * @return
+     */
     public int getPage() {
         return pageCounter;
     }
 
+    /**
+     * 
+     * @param index is the index
+     * @param dimension is the dimension
+     * @param category is the category
+     * @return the percent like 
+     */
     public double getPercentLike(int index, int dimension, int category) {
         return playList.get(index).getDimension(dimension).getCategory(category)
                 .getPercentLike();
     }
 
+    /**
+     * 
+     * @param index is the index
+     * @param dimension is the dimension
+     * @param category is the category
+     * @return the percent heard
+     */
     public double getPercentHeard(int index, int dimension, int category) {
         return 0;
     }
 
+    /**
+     * this is class which 
+     * @return playList
+     */
     public LinkedList<Song> getPlayList() {
         return playList;
     }
 
+    /**
+     * this is the class
+     * @return size
+     */
     public int getNumberOfSongs() {
         return playList.size();
     }

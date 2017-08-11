@@ -14,8 +14,9 @@ public class Category {
     // private double percentLike;
     private int numberofHeard;
     private int numberofLike;
-    // private int numberofResponses;
-    protected int totalNumber;
+
+    private int totalNumberLike;
+    private int totalNumberHeard;
 
     /**
      * this is the constructor
@@ -25,20 +26,11 @@ public class Category {
      * @param numberofLike
      */
     public Category() {
-        // numberofHeard = this.numberofHeard;
-        // numberofLike = this.numberofLike;
-        // totalNumber = this.totalNumber;
+    
         numberofHeard = 0;
         numberofLike = 0;
-        totalNumber = 0;
-    }
-    
-    public Category(int numberofHeard, int numberofLike,
-            int totalNumber)
-    {
-        this.numberofHeard = numberofHeard;
-        this.numberofLike = numberofLike;
-        this.numberofLike = numberofLike;
+        totalNumberLike = 0;
+        totalNumberHeard = 0;
     }
 
     /**
@@ -46,7 +38,7 @@ public class Category {
      */
     public void upDateLike() {
         numberofLike = numberofLike + 1;
-        upDateTotal();
+        
     }
 
     /**
@@ -54,7 +46,8 @@ public class Category {
      */
     public void upDateTotal() {
 
-        totalNumber = totalNumber + 1;
+        totalNumberLike++;
+        totalNumberHeard++;
     }
 
     /**
@@ -63,18 +56,26 @@ public class Category {
     public void upDateHeard() {
 
         numberofHeard = numberofHeard + 1;
-        upDateTotal();
     }
 
     /**
-     * this method is used to getToal
+     * this method is used to getTotal
      * 
      * @return total number
      */
-    public int getTotal() {
-        return totalNumber;
+    public int getTotalLike() {
+        return totalNumberLike;
     }
 
+    /**
+     * 
+     * @return
+     */
+    public int getTotalHeard() {
+        return totalNumberHeard;
+    }
+    
+    
     /**
      * @return the number of likes
      */
@@ -94,10 +95,10 @@ public class Category {
      * 
      */
     public double getPercentLike() {
-        if (totalNumber == 0 && numberofLike == 0) {
+        if (totalNumberLike == 0 && numberofLike == 0) {
             return 0;
         } else {
-            double percentLike = (double) numberofLike / totalNumber;
+            double percentLike = (double) numberofLike / totalNumberLike;
             return percentLike;
         }
     }
@@ -106,13 +107,13 @@ public class Category {
      * @return the percentage of likes
      */
     public double getPercentHeard() {
-        if(totalNumber == 0 && numberofHeard == 0)
+        if(totalNumberHeard == 0 && numberofHeard == 0)
         {
             return 0;
         }
         else
         {
-        double percentHeard = (double) numberofHeard / totalNumber;
+        double percentHeard = (double) numberofHeard / totalNumberHeard;
         return percentHeard;
         }
     }

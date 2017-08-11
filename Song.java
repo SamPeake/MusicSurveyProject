@@ -3,20 +3,20 @@
  */
 package musicsurvey;
 
-import java.util.Comparator;
+//import java.util.Comparator;
 
 /**
  * @author zichen
  * @version 2017.08.05
  *
  */
-public class Song extends Category{
+public class Song extends Category {
 
     // this is the fields.........................
     private String songName;
     private String genre;
-    private int year;
-    private String Artist;
+    private String year;
+    private String artist;
     private Dimension major;
     private Dimension hobby;
     private Dimension location;
@@ -26,22 +26,22 @@ public class Song extends Category{
     /**
      * this is the Constructor for the Song class
      * 
-     * @param songName
-     * @param genre
-     * @param year
-     * @param Artist
-     * @param columnHeard
-     * @param columnlike
+     * @param songName is the 
+     * @param genre is the 
+     * @param year is the 
+     * @param artist is the  
      */
-    public Song(String songName, String Artist, String genre, int year) {
+    public Song(String songName, String artist, String genre, String year) {
         this.songName = songName;
         this.genre = genre;
         this.year = year;
-        this.Artist = Artist;
+        this.artist = artist;
         this.columnHeard = 0;
         this.columnLike = 0;
+        this.major = new Dimension();
+        this.hobby = new Dimension();
+        this.location = new Dimension();
     }
-    
 
     /**
      * this method is used to return thesongName
@@ -66,7 +66,7 @@ public class Song extends Category{
      * 
      * @return year is the data that song was published
      */
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
@@ -76,16 +76,21 @@ public class Song extends Category{
      * @return Artist is the
      */
     public String getArtist() {
-        return Artist;
+        return artist;
     }
 
     /**
+     * 
      * @return columnHeart is the number of times of heard
      */
     public int getColumnHeard() {
         return columnHeard;
     }
-    
+
+    /**
+     * 
+     * @param newColumn is the 
+     */
     public void setColumnHeard(int newColumn) {
         columnHeard = newColumn;
     }
@@ -97,24 +102,34 @@ public class Song extends Category{
         return columnLike;
     }
 
+    /**
+     * 
+     * @param newColumn is the 
+     */
     public void setColumnLike(int newColumn) {
         columnLike = newColumn;
     }
+
     /**
-     * @return
+     * @param str is the string 
+     * @return either the major or major ot location 
      */
     public Dimension getDimension(String str) {
-        if (str == "major") {
+        if (str.equals("major")) {
             return major;
         } 
-        else if (str == "hobby") {
+        else if (str.equals("hobby")) {
             return hobby;
         } 
         else {
             return location;
         }
     }
-    
+/**
+ * 
+ * @param dimension is the dimension
+ * @return different thing
+ */
     public Dimension getDimension(int dimension) {
         if (dimension == 1) {
             return major;
@@ -126,19 +141,18 @@ public class Song extends Category{
             return location;
         }
     }
-        
-        /**
-         * this method is used to return a string 
-         */
-        public String toString() {
-        
-            String ans = "Song Name: " + getSongName() + "\n"
-                    + "Song Artist: " + getArtist() + "\n"
-                    + "Song Genre: " + getGenre() + "\n"
-                    + "Song Year: " + getYear();
-            return ans;
-        
+
+    /**
+     * this method is used to return a string
+     * @return the string that reprensent 
+     */
+    public String toString() {
+
+        String ans = "Song Name: " + getSongName() + "\n" + "Song Artist: " 
+            + getArtist() + "\n" + "Song Genre: "
+                + getGenre() + "\n" + "Song Year: " + getYear();
+        return ans;
+
     }
-        
 
 }

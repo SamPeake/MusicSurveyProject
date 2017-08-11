@@ -27,6 +27,13 @@ public class Dimension {
 
     }
     
+        public Dimension()
+        {
+            this.category1 = new Category();
+            this.category2 = new Category();;
+            this.category3 = new Category();;
+            this.category4 = new Category();;
+        }
     /**
      * @return 
      */

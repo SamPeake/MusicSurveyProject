@@ -35,13 +35,13 @@ public class GraphSolverTest extends TestCase {
      */
     public void testMakePlayList()
     {
-        /**
+       /** 
         NoDataSourceException thrown = null;
         try 
         {
             solver2.makePlayList();
         } 
-        //catch (NoDataSourceException exception) 
+        catch (NoDataSourceException exception) 
         {
 
             thrown = exception;
@@ -49,6 +49,7 @@ public class GraphSolverTest extends TestCase {
         assertNotNull(thrown);
         */
     }
+    
     
     /**
      * this method is used to test the upDatePlayList
