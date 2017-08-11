@@ -366,8 +366,7 @@ public class GraphSolver {
             }
             
             
-            else {
-               
+            else {              
                 throw new IllegalArgumentException();
             }
         }
