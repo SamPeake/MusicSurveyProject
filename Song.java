@@ -31,13 +31,13 @@ public class Song extends Category{
      * @param columnHeard
      * @param columnlike
      */
-    public Song(String songName, String genre, int year, String Artist, int columnHeard, int columnLike) {
+    public Song(String songName, String genre, int year, String Artist) {
         this.songName = songName;
         this.genre = genre;
         this.year = year;
         this.Artist = Artist;
-        this.columnHeard = columnHeard;
-        this.columnLike = columnLike;
+        //this.columnHeard = columnHeard;
+       // this.columnLike = columnLike;
     }
 
     /**
@@ -100,10 +100,33 @@ public class Song extends Category{
         else if (str == "hobby") {
             return hobby;
         } 
-        else {
+        else if (str == "location"){
             return location;
         }
+        else
+        {
+            return major;
+        }
     }
+    
+    //@overload
+    public Dimension getDimension(int i)
+    {
+        if (i == 1) {
+            return major;
+        } 
+        else if (i == 2) {
+            return hobby;
+        } 
+        else if (i == 3){
+            return location;
+        }
+        else
+        {
+            return major;
+        }
+    }
+    
         
         /**
          * this method is used to return a string 
