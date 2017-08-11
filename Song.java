@@ -3,6 +3,8 @@
  */
 package musicsurvey;
 
+import java.util.Comparator;
+
 /**
  * @author zichen
  * @version 2017.08.05
@@ -31,14 +33,15 @@ public class Song extends Category{
      * @param columnHeard
      * @param columnlike
      */
-    public Song(String songName, String genre, int year, String Artist) {
+    public Song(String songName, String Artist, String genre, int year) {
         this.songName = songName;
         this.genre = genre;
         this.year = year;
         this.Artist = Artist;
-        //this.columnHeard = columnHeard;
-       // this.columnLike = columnLike;
+        this.columnHeard = 0;
+        this.columnLike = 0;
     }
+    
 
     /**
      * this method is used to return thesongName
@@ -82,6 +85,10 @@ public class Song extends Category{
     public int getColumnHeard() {
         return columnHeard;
     }
+    
+    public void setColumnHeard(int newColumn) {
+        columnHeard = newColumn;
+    }
 
     /**
      * @return colunmLike is the times of like
@@ -90,6 +97,9 @@ public class Song extends Category{
         return columnLike;
     }
 
+    public void setColumnLike(int newColumn) {
+        columnLike = newColumn;
+    }
     /**
      * @return
      */
@@ -100,33 +110,22 @@ public class Song extends Category{
         else if (str == "hobby") {
             return hobby;
         } 
-        else if (str == "location"){
+        else {
             return location;
-        }
-        else
-        {
-            return major;
         }
     }
     
-    //@overload
-    public Dimension getDimension(int i)
-    {
-        if (i == 1) {
+    public Dimension getDimension(int dimension) {
+        if (dimension == 1) {
             return major;
         } 
-        else if (i == 2) {
+        else if (dimension == 2) {
             return hobby;
         } 
-        else if (i == 3){
+        else {
             return location;
         }
-        else
-        {
-            return major;
-        }
     }
-    
         
         /**
          * this method is used to return a string 
