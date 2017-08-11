@@ -47,12 +47,9 @@ public class DisplayWindow {
         // Next and Previous
         previousButton = new Button("<- Prev");
         window.addButton(previousButton, WindowSide.NORTH);
-        previousButton.onClick(this, "clickedPrevious");
+        previousButton.onClick(this, "clickedPage");
         previousButton.disable();
 
-        nextButton = new Button("Next ->");
-        window.addButton(nextButton, WindowSide.NORTH);
-        nextButton.onClick(this, "clickedNext");
 
         // Sorting Buttons
         artistButton = new Button("Artist");
@@ -66,6 +63,10 @@ public class DisplayWindow {
         dateButton = new Button("Year");
         window.addButton(dateButton, WindowSide.NORTH);
         dateButton.onClick(this, "clickSort");
+        
+        nextButton = new Button("Next ->");
+        window.addButton(nextButton, WindowSide.NORTH);
+        nextButton.onClick(this, "clickedPage");
 
         genreButton = new Button("Genre");
         window.addButton(genreButton, WindowSide.NORTH);
@@ -85,6 +86,14 @@ public class DisplayWindow {
         locationButton.onClick(this, "generatelocation");
 
         window.setTitle("Music Preference Visualization");
+        
+        previousButton.disable();
+        if(solver.getPage() + 9 >= solver.getNumberOfSongs()) {
+            nextButton.disable();
+        }
+        else {
+            nextButton.enable();
+        }
 
         fillWindow();
 
@@ -418,17 +427,15 @@ public class DisplayWindow {
     public void getNextNineSongs() {
 
         window.removeAllShapes();
+        solver.flipPage(true);
         fillWindow();
-        if (((solver.getPage() * 9) + 9) == 0) {
+        if (((solver.getPage() * 9) + 9) >= solver.getNumberOfSongs()) {
             nextButton.disable();
         }
-        if (solver.getPage() == 0) {
-            previousButton.disable();
-        }
-        if (((solver.getPage() * (9) + (9)) != 0) && (solver.getPage() != 0)) {
+        else {
             nextButton.enable();
-            previousButton.enable();
         }
+        previousButton.enable();
     }
 
     /**
@@ -436,17 +443,15 @@ public class DisplayWindow {
      */
     public void getPrevNineSongs() {
         window.removeAllShapes();
+        solver.flipPage(false);
         fillWindow();
-        if (((solver.getPage() * 9) + 9) == 0) {
+        if (solver.getPage() <= 0) {
             previousButton.disable();
         }
-        if (solver.getPage() == 0) {
-            nextButton.disable();
+        else {
+            previousButton.enable(); 
         }
-        if (((solver.getPage() * 9) + 9) != 0 && (solver.getPage() != 0)) {
-            previousButton.enable();
-            nextButton.enable();
-        }
+        nextButton.enable();
     }
 
     public void clickSort(Button button) {
@@ -476,11 +481,28 @@ public class DisplayWindow {
     public void clickDimension(Button button) {
         if (button == majorButton) {
 
+            dimension = 1;
         }
+        else if (button == hobbyButton) {
+            dimension = 2;
+            
+        }
+        else if (button == locationButton) {
+            dimension = 3;
+        }
+        window.removeAllShapes();
+        fillWindow();
+       
     }
 
     public void clickPage(Button button) {
 
+        if (button == nextButton) {
+            this.getNextNineSongs();
+        }
+        else if (button == previousButton) {
+            this.getPrevNineSongs();
+        }
     }
 
 }
