@@ -23,111 +23,102 @@ public class GraphSolver {
 
     private LinkedList<Song> playList;
     private int pageCounter;
-    private BufferedReader songFile;
-    private BufferedReader surveyFile;
+    private String songFile;
+    private String surveyFile;
 
     public GraphSolver(String songFile, String surveyFile) {
 
-        try {
-            this.songFile = new BufferedReader(new FileReader(songFile));
-            this.surveyFile = new BufferedReader(new FileReader(surveyFile));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        
+            this.songFile = songFile;
+            this.surveyFile = surveyFile;
+       
         playList = new LinkedList<Song>();
         pageCounter = 0;
     }
 
-    private String[] readSurveyFile(int index) {
+    private LinkedList<Student> readSurveyFile() {
+        int index = 0;
         String line = "";
+        LinkedList<Student> students = null;
 
-        try {
-            line = surveyFile.readLine();
-            if (line != null) {
+        try (BufferedReader br = new BufferedReader(new FileReader(this.surveyFile))){
+            line = br.readLine();
+          
+                students = new LinkedList<Student>();
+                while ((line = br.readLine()) != null) {
 
-                String[] responses;
-                // just reading the first row with the column names
-                if (index == 0) {
+                    String[] responses;
+                    // just reading the first row with the column names
+                    if (index == 0) {
 
-                    responses = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)",
-                            -1);
+                        responses = line
+                                .split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
+                    }
+                    // survey responses ,
+                    // limiting the index range so that system.out can show
+                    // everything
+
+                    else {
+                        responses = line.split(",");
+                        Student newStudent = makeStudent(responses);
+                        students.add(newStudent);
+
+                    }
+
+                    index++;
                 }
-                // survey responses ,
-                // limiting the index range so that system.out can show
-                // everything
 
-                else {
-                    responses = line.split(",");
-
+                if (students.isEmpty()) {
+                    return null;
                 }
-
-                return responses;
-            }
-            return null;
+                return students;
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+      return null;
     }
-    private String[] readSongFile(boolean firstRow) {
+    private void readSongFile() {
         String line = "";
+        int index = 0;
 
-        try {
-            line = surveyFile.readLine();
-            if (line != null) {
+        try (BufferedReader br = new BufferedReader(new FileReader(this.songFile))){
 
-                String[] responses;
-                // just reading the first row with the column names
-                if (firstRow) {
+                while ((line = br.readLine()) != null) {
+                    String[] responses;
+                    // just reading the first row with the column names
+                    if (index == 0) {
 
-                    responses = null;
+                        responses = null;
 
+                    }
+                    // survey responses ,
+                    // limiting the index range so that system.out can show
+                    // everything
+
+                    else {
+                        responses = line.split(",");
+
+                    }
+
+                    playList.add(new Song(responses[0], responses[1],
+                            responses[3], responses[2]));
+
+                    index++;
                 }
-                // survey responses ,
-                // limiting the index range so that system.out can show
-                // everything
-
-                else {
-                    responses = line.split(",");
-
-                }
-
-                return responses;
-            }
-            return null;
+            
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     public void makePlayList() {
-        readSongFile(true);
-        String[] newSong = readSongFile(false);
-        try {
-            if (newSong != null) {
-                while (newSong != null) {
-                    int year = Integer.parseInt(newSong[2]);
-                    playList.add(
-                            new Song(newSong[0], newSong[1], newSong[3], year));
-                    newSong = readSongFile(false);
-                }
-            }
-            else {
-                throw new NoDataSourceException();
-            }
-        }
-        catch (NoDataSourceException e) {
-            e.printStackTrace();
-        }
+        readSongFile();
     }
-    private Student makeStudent() {
-        int index = 1;
-        String[] row = readSurveyFile(index);
+    private Student makeStudent(String[] row) {
+
         int rowNumber = Integer.parseInt(row[0]);
         Student newStudent = new Student(row[2], row[3], row[4], rowNumber,
                 row[1]);
@@ -141,10 +132,10 @@ public class GraphSolver {
         for (int i = 0; i < playList.size(); i++) {
 
             String dim = "hobby";
-            if (student.getHobby() == "reading") {
+            if (student.getHobby().contentEquals("reading")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateHeard();
                 }
@@ -153,7 +144,7 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateLike();
                 }
@@ -162,7 +153,7 @@ public class GraphSolver {
             else if (student.getHobby() == "sports") {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateHeard();
                 }
@@ -171,7 +162,7 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateLike();
                 }
@@ -179,7 +170,7 @@ public class GraphSolver {
             else if (student.getHobby() == "arts") {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateHeard();
                 }
@@ -188,15 +179,15 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateLike();
                 }
             }
-            else if (student.getHobby() == "music") {
+            else if (student.getHobby().equals("music")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateHeard();
                 }
@@ -205,7 +196,7 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateLike();
                 }
@@ -216,10 +207,10 @@ public class GraphSolver {
 
             // Major
             dim = "major";
-            if (student.getMajor() == "Math or CMDA") {
+            if (student.getMajor().equals("Math or CMDA")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateHeard();
                 }
@@ -228,16 +219,16 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateLike();
                 }
 
             }
-            else if (student.getMajor() == "Computer Science") {
+            else if (student.getMajor().equals("Computer Science")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.contentEquals("Yes")) {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateHeard();
                 }
@@ -246,15 +237,15 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateLike();
                 }
             }
-            else if (student.getMajor() == "Other") {
+            else if (student.getMajor().equals("Other")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateHeard();
                 }
@@ -263,15 +254,15 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateLike();
                 }
             }
-            else if (student.getMajor() == "Other Engineering") {
+            else if (student.getMajor().equals("Other Engineering")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateHeard();
                 }
@@ -280,7 +271,7 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateLike();
                 }
@@ -291,10 +282,10 @@ public class GraphSolver {
 
             // Location
             dim = "location";
-            if (student.getState() == "Northeast") {
+            if (student.getState().equals("Northeast")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateHeard();
                 }
@@ -303,16 +294,16 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateLike();
                 }
 
             }
-            else if (student.getState() == "Southeast") {
+            else if (student.getState().equals("Southeast")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateHeard();
                 }
@@ -321,16 +312,16 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateLike();
                 }
             }
-            else if (student
-                    .getState() == "United States (other than Southeast or Northwest)") {
+            else if (student.getState().equals(
+                    "United States (other than Southeast or Northwest)")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateHeard();
                 }
@@ -339,7 +330,7 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateLike();
                 }
@@ -347,7 +338,7 @@ public class GraphSolver {
             else if (student.getState() == "Outside of United States") {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer == "Yes") {
+                if (answer.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateHeard();
                 }
@@ -356,7 +347,7 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2 == "Yes") {
+                if (answer2.equals("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateLike();
                 }
@@ -370,11 +361,10 @@ public class GraphSolver {
 
     public void upDatePlayList() {
 
-        readSurveyFile(0);
         try {
-            Student newStudent = makeStudent();
-            while (newStudent != null) {
-                upDateSong(newStudent);
+            LinkedList<Student> students = readSurveyFile();
+            for (int i = 0; i < students.size(); i++) {
+                upDateSong(students.get(i));
             }
         }
         catch (IllegalArgumentException e) {
@@ -383,13 +373,13 @@ public class GraphSolver {
     }
 
     public void sortSongs(String dimension) {
-        if (dimension == "Song") {
+        if (dimension.equals("Song")) {
             Collections.sort(playList, new SongComparator());
         }
-        else if (dimension == "Artist") {
+        else if (dimension.equals("Artist")) {
             Collections.sort(playList, new ArtistComparator());
         }
-        else if (dimension == "Genre") {
+        else if (dimension.equals("Genre")) {
             Collections.sort(playList, new GenreComparator());
         }
         else {
@@ -412,10 +402,10 @@ public class GraphSolver {
     }
 
     public double getPercentLike(int index, int dimension, int category) {
-        return playList.get(index).getDimension(dimension)
-                .getCategory(category).getPercentLike();
+        return playList.get(index).getDimension(dimension).getCategory(category)
+                .getPercentLike();
     }
-    
+
     public double getPercentHeard(int index, int dimension, int category) {
         return 0;
     }
@@ -423,7 +413,7 @@ public class GraphSolver {
     public LinkedList<Song> getPlayList() {
         return playList;
     }
-    
+
     public int getNumberOfSongs() {
         return playList.size();
     }
