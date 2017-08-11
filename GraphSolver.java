@@ -113,7 +113,7 @@ public class GraphSolver {
                 while (newSong != null) {
                     int year = Integer.parseInt(newSong[2]);
                     playList.add(
-                            new Song(newSong[0], newSong[1], newSong[3], year));
+                            new Song(newSong[0], newSong[1], year, newSong[3]));
                     newSong = readSongFile(false);
                 }
             }

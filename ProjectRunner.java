@@ -17,5 +17,9 @@ public class ProjectRunner {
         if(args.length == 2) {
             new DisplayWindow(new GraphSolver(args[0], args[1]));
         }
+        else
+        {
+            new DisplayWindow(new GraphSolver("SongList2016S.csv", "MusicSurveyData2016S.csv"));       
+        }
     }
 }

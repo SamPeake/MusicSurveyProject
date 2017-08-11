@@ -1,6 +1,3 @@
-/**
- * 
- */
 package musicsurvey;
 
 import java.util.Comparator;

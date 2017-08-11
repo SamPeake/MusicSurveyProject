@@ -32,6 +32,14 @@ public class Category {
         numberofLike = 0;
         totalNumber = 0;
     }
+    
+    public Category(int numberofHeard, int numberofLike,
+            int totalNumber)
+    {
+        this.numberofHeard = numberofHeard;
+        this.numberofLike = numberofLike;
+        this.numberofLike = numberofLike;
+    }
 
     /**
      * this is the method that update the number of likes
