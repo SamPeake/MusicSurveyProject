@@ -411,13 +411,21 @@ public class GraphSolver {
         return pageCounter;
     }
 
-    public double getPercentLike(int index, String dimension, int category) {
-        return this.getPlayList().get(index).getDimension(dimension)
+    public double getPercentLike(int index, int dimension, int category) {
+        return playList.get(index).getDimension(dimension)
                 .getCategory(category).getPercentLike();
+    }
+    
+    public double getPercentHeard(int index, int dimension, int category) {
+        return 0;
     }
 
     public LinkedList<Song> getPlayList() {
         return playList;
+    }
+    
+    public int getNumberOfSongs() {
+        return playList.size();
     }
 
 }
