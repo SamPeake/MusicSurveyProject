@@ -28,10 +28,9 @@ public class GraphSolver {
 
     public GraphSolver(String songFile, String surveyFile) {
 
-        
-            this.songFile = songFile;
-            this.surveyFile = surveyFile;
-       
+        this.songFile = songFile;
+        this.surveyFile = surveyFile;
+
         playList = new LinkedList<Song>();
         pageCounter = 0;
     }
@@ -41,73 +40,74 @@ public class GraphSolver {
         String line = "";
         LinkedList<Student> students = null;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(this.surveyFile))){
-            line = br.readLine();
-          
-                students = new LinkedList<Student>();
-                while ((line = br.readLine()) != null) {
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(this.surveyFile))) {
 
-                    String[] responses;
-                    // just reading the first row with the column names
-                    if (index == 0) {
+            students = new LinkedList<Student>();
+            while ((line = br.readLine()) != null) {
 
-                        responses = line
-                                .split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                String[] responses;
+                // just reading the first row with the column names
+                if (index == 0) {
 
-                    }
-                    // survey responses ,
-                    // limiting the index range so that system.out can show
-                    // everything
+                    responses = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)",
+                            -1);
 
-                    else {
-                        responses = line.split(",");
-                        Student newStudent = makeStudent(responses);
-                        students.add(newStudent);
+                }
+                // survey responses ,
+                // limiting the index range so that system.out can show
+                // everything
 
-                    }
+                else {
+                    responses = line.split(",");
+                    Student newStudent = makeStudent(responses);
+                    students.add(newStudent);
 
-                    index++;
                 }
 
-                if (students.isEmpty()) {
-                    return null;
-                }
-                return students;
+                index++;
+            }
+
+            if (students.isEmpty()) {
+                return null;
+            }
+            return students;
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-      return null;
+        return null;
     }
     private void readSongFile() {
         String line = "";
         int index = 0;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(this.songFile))){
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(this.songFile))) {
 
-                while ((line = br.readLine()) != null) {
-                    String[] responses;
-                    // just reading the first row with the column names
-                    if (index == 0) {
+            while ((line = br.readLine()) != null) {
+                String[] responses;
+                // just reading the first row with the column names
+                if (index == 0) {
 
-                        responses = null;
+                    responses = null;
 
-                    }
-                    // survey responses ,
-                    // limiting the index range so that system.out can show
-                    // everything
-
-                    else {
-                        responses = line.split(",");
-
-                    }
-
-                    playList.add(new Song(responses[0], responses[1],
-                            responses[3], responses[2]));
-
-                    index++;
                 }
-            
+                // survey responses ,
+                // limiting the index range so that system.out can show
+                // everything
+
+                else {
+                    responses = line.split(",");
+
+                }
+
+                playList.add(new Song(responses[0], responses[1], responses[3],
+                        responses[2]));
+
+                index++;
+            }
+
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -132,10 +132,11 @@ public class GraphSolver {
         for (int i = 0; i < playList.size(); i++) {
 
             String dim = "hobby";
-            if (student.getHobby().contentEquals("reading")) {
+            if (student.getHobby().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("reading")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateHeard();
                 }
@@ -144,16 +145,17 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateLike();
                 }
 
             }
-            else if (student.getHobby() == "sports") {
+            else if (student.getHobby().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("sports")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateHeard();
                 }
@@ -162,15 +164,16 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateLike();
                 }
             }
-            else if (student.getHobby() == "arts") {
+            else if (student.getHobby().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("arts")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateHeard();
                 }
@@ -179,15 +182,16 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateLike();
                 }
             }
-            else if (student.getHobby().equals("music")) {
+            else if (student.getHobby().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("music")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateHeard();
                 }
@@ -196,7 +200,7 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateLike();
                 }
@@ -207,10 +211,11 @@ public class GraphSolver {
 
             // Major
             dim = "major";
-            if (student.getMajor().equals("Math or CMDA")) {
+            if (student.getMajor().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("MathorCMDA")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateHeard();
                 }
@@ -219,16 +224,17 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateLike();
                 }
 
             }
-            else if (student.getMajor().equals("Computer Science")) {
+            else if (student.getMajor().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("ComputerScience")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateHeard();
                 }
@@ -237,15 +243,16 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateLike();
                 }
             }
-            else if (student.getMajor().equals("Other")) {
+            else if (student.getMajor().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("Other")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateHeard();
                 }
@@ -254,15 +261,16 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateLike();
                 }
             }
-            else if (student.getMajor().equals("Other Engineering")) {
+            else if (student.getMajor().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("OtherEngineering")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateHeard();
                 }
@@ -271,7 +279,7 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateLike();
                 }
@@ -282,10 +290,11 @@ public class GraphSolver {
 
             // Location
             dim = "location";
-            if (student.getState().equals("Northeast")) {
+            if (student.getState().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("Northeast")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateHeard();
                 }
@@ -294,16 +303,17 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(1)
                             .upDateLike();
                 }
 
             }
-            else if (student.getState().equals("Southeast")) {
+            else if (student.getState().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("Southeast")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateHeard();
                 }
@@ -312,16 +322,17 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(2)
                             .upDateLike();
                 }
+
             }
-            else if (student.getState().equals(
-                    "United States (other than Southeast or Northwest)")) {
+            else if (student.getState().replaceAll("\\s+", "").equalsIgnoreCase(
+                    "UnitedStates(otherthanSoutheastorNorthwest)")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateHeard();
                 }
@@ -330,15 +341,16 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(3)
                             .upDateLike();
                 }
             }
-            else if (student.getState() == "Outside of United States") {
+            else if (student.getState().replaceAll("\\s+", "")
+                    .equalsIgnoreCase("Southeast")) {
                 String answer = student.get((i * 2) + 5);
                 String answer2 = student.get((i * 2) + 6);
-                if (answer.equals("Yes")) {
+                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateHeard();
                 }
@@ -347,7 +359,7 @@ public class GraphSolver {
                             .upDateTotal();
                 }
 
-                if (answer2.equals("Yes")) {
+                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
                     playList.get(i).getDimension(dim).getCategory(4)
                             .upDateLike();
                 }
