@@ -26,6 +26,9 @@ public class GraphSolverTest extends TestCase {
         solver1 = new GraphSolver("SongList2016S.csv",
                 "MusicSurveyData2016S.csv");
         pageCounter = 0;
+        solver1.readSurveyFile();
+
+        solver1.makePlayList();
 
     }
 
@@ -38,7 +41,8 @@ public class GraphSolverTest extends TestCase {
          * catch (NoDataSourceException exception) { thrown = exception; }
          * assertNotNull(thrown);
          */
-        solver1.readSongFile();
+        // solver1.readSongFile();
+        assertEquals(59, solver1.getNumberOfSongs());
         assertEquals(solver1.getPlayList().size(), 59);
     }
 
@@ -46,7 +50,7 @@ public class GraphSolverTest extends TestCase {
      * this method is used to test the upDatePlayList
      */
     public void testUpDatePlayList() {
-
+        solver1.upDatePlayList();
     }
 
     /**
@@ -61,6 +65,10 @@ public class GraphSolverTest extends TestCase {
                 + "Song Artist: The Killers\n" + "Song Genre: alternative\n"
                 + "Song Year: 2005";
         assertEquals(str, solver1.getPlayList().removeFirst().toString());
+        solver1.sortSongs("Artist");
+        solver1.sortSongs("Genre");
+        solver1.sortSongs("as");
+        // System.out.println(solver1.getPlayList().removeFirst().toString());
     }
 
     /**
@@ -95,8 +103,9 @@ public class GraphSolverTest extends TestCase {
      */
     public void testgetPercentLike() {
         solver1.readSongFile();
-        solver1.getPercentHeard(1, 1, 1);
+        solver1.getPercentLike(1, 1, 1);
         // System.out.println(solver1.getPercentHeard(1, 1, 1));
-        assertEquals(0.0, solver1.getPercentHeard(1, 1, 1), 0.0001);
+        assertEquals(0.0, solver1.getPercentLike(1, 1, 1), 0.0001);
     }
+
 }
