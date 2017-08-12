@@ -38,7 +38,7 @@ public class GUIDisplayWindow {
     public GUIDisplayWindow(GraphSolver solver) {
         this.solver = solver;
         dimension = 0;
-        window = new Window();
+        window = new Window("Music Visualization");
 
         solver.makePlayList();
         solver.upDatePlayList();
@@ -77,15 +77,15 @@ public class GUIDisplayWindow {
         // Dimensions
         hobbyButton = new Button("Hobby");
         window.addButton(hobbyButton, WindowSide.SOUTH);
-        hobbyButton.onClick(this, "clickedHobby");
+        hobbyButton.onClick(this, "clickDimension");
 
         majorButton = new Button("Major");
         window.addButton(majorButton, WindowSide.SOUTH);
-        majorButton.onClick(this, "clickedMajor");
+        majorButton.onClick(this, "clickDimension");
 
         locationButton = new Button("Region");
         window.addButton(locationButton, WindowSide.SOUTH);
-        locationButton.onClick(this, "generatelocation");
+        locationButton.onClick(this, "clickDimension");
 
         window.setTitle("Music Preference Visualization");
 
@@ -118,16 +118,16 @@ public class GUIDisplayWindow {
             Position column;
             Position row;
             if ((j % 3) == 0) {
-                column = Position.BackEnum;
+                column = Position.FrontEnum;
             } else if ((j % 2) == 0) {
                 column = Position.MiddleEnum;
             } else {
                 column = Position.BackEnum;
             }
 
-            if (j > 5) {
+            if (j > 6) {
                 row = Position.BackEnum;
-            } else if (j > 2) {
+            } else if (j > 3) {
                 row = Position.MiddleEnum;
             } else {
                 row = Position.FrontEnum;
@@ -157,7 +157,7 @@ public class GUIDisplayWindow {
             category2.setBackgroundColor(Color.WHITE);
             category2.setX(x - (category2.getWidth() / 2));
             x = (x / 3) * 5;
-            
+
             window.addShape(category2);
             TextShape category3 = new TextShape(x, y, "Other", getColor(dimension, 3));
             category3.setBackgroundColor(Color.WHITE);
@@ -183,7 +183,7 @@ public class GUIDisplayWindow {
             category2.setBackgroundColor(Color.WHITE);
             category2.setX(x - (category2.getWidth() / 2));
             x = (x / 3) * 5;
-            
+
             window.addShape(category2);
             TextShape category3 = new TextShape(x, y, "", getColor(dimension, 3));
             category3.setBackgroundColor(Color.WHITE);
@@ -208,7 +208,7 @@ public class GUIDisplayWindow {
             category2.setBackgroundColor(Color.WHITE);
             category2.setX(x - (category2.getWidth() / 2));
             x = (x / 3) * 5;
-            
+
             window.addShape(category2);
             TextShape category3 = new TextShape(x, y, "Other", getColor(dimension, 3));
             category3.setBackgroundColor(Color.WHITE);
@@ -257,15 +257,21 @@ public class GUIDisplayWindow {
 
         genre.setText(solver.getPlayList().get(index).getGenre());
         x = (window.getGraphPanelWidth() * (columnFactor / 6)) - (genre.getWidth() / 2);
+        x = -x;
         y = (window.getGraphPanelHeight() * (rowFactor / 6)) - title.getHeight() - this.LEGEND_GAP;
-        genre.setX(x);
+
+        y = -y;
+        System.out.println(y);
         genre.setY(y);
+        System.out.println(genre.getText());
         window.addShape(genre);
         window.moveToFront(genre);
 
         year.setText(solver.getPlayList().get(index).getYear() + "");
         x = (window.getGraphPanelWidth() * (columnFactor / 6)) - (year.getWidth() / 2);
+       
         y = y - year.getHeight();
+       
         year.setX(x);
         year.setY(y);
         window.addShape(year);
@@ -273,7 +279,7 @@ public class GUIDisplayWindow {
 
         artist.setText(solver.getPlayList().get(index).getArtist());
         x = (window.getGraphPanelWidth() * (columnFactor / 6)) - (artist.getWidth() / 2);
-        y = y - artist.getHeight();
+        y = y + artist.getHeight();
         artist.setX(x);
         artist.setY(y);
         window.addShape(artist);
@@ -281,7 +287,7 @@ public class GUIDisplayWindow {
 
         title.setText(solver.getPlayList().get(index).getSongName());
         x = (window.getGraphPanelWidth() * (columnFactor / 6)) - (title.getWidth() / 2);
-        y = y - title.getHeight();
+        y = y + title.getHeight();
         title.setX(x);
         title.setY(y);
         window.addShape(title);
@@ -332,7 +338,7 @@ public class GUIDisplayWindow {
         int widthLike = (int) Math.round(maxPercent * widthPercent);
         widthPercent = solver.getPercentHeard(index, dimension, 1);
         int widthHeard = (int) Math.round(maxPercent * widthPercent);
-        x2 = axis.getWidth() - widthHeard;
+        x2 = x1 - widthHeard;
         Shape heardBar1 = new Shape(x2, y, widthHeard, height, getColor(dimension, 1));
         Shape likeBar1 = new Shape(x1, y, widthLike, height, getColor(dimension, 1));
         window.addShape(likeBar1);
@@ -343,7 +349,7 @@ public class GUIDisplayWindow {
         widthLike = (int) Math.round(maxPercent * widthPercent);
         widthPercent = solver.getPercentHeard(index, dimension, 2);
         widthHeard = (int) Math.round(maxPercent * widthPercent);
-        x2 = axis.getWidth() - widthHeard;
+        x2 = x1 - widthHeard;
         Shape heardBar2 = new Shape(x2, y, widthHeard, height, getColor(dimension, 2));
         Shape likeBar2 = new Shape(x1, y, widthLike, height, getColor(dimension, 2));
         window.addShape(likeBar2);
@@ -353,8 +359,9 @@ public class GUIDisplayWindow {
         widthPercent = solver.getPercentLike(index, dimension, 3);
         widthLike = (int) Math.round(maxPercent * widthPercent);
         widthPercent = solver.getPercentHeard(index, dimension, 3);
+
         widthHeard = (int) Math.round(maxPercent * widthPercent);
-        x2 = axis.getWidth() - widthHeard;
+        x2 = x1 - widthHeard;
         Shape heardBar3 = new Shape(x2, y, widthHeard, height, getColor(dimension, 3));
         Shape likeBar3 = new Shape(x1, y, widthLike, height, getColor(dimension, 3));
         window.addShape(likeBar3);
@@ -365,7 +372,7 @@ public class GUIDisplayWindow {
         widthLike = (int) Math.round(maxPercent * widthPercent);
         widthPercent = solver.getPercentHeard(index, dimension, 4);
         widthHeard = (int) Math.round(maxPercent * widthPercent);
-        x2 = axis.getWidth() - widthHeard;
+        x2 = x1 - widthHeard;
         Shape heardBar4 = new Shape(x2, y, widthHeard, height, getColor(dimension, 4));
         Shape likeBar4 = new Shape(x1, y, widthLike, height, getColor(dimension, 4));
         window.addShape(likeBar4);
@@ -501,7 +508,7 @@ public class GUIDisplayWindow {
 
     }
 
-    public void clickPage(Button button) {
+    public void clickedPage(Button button) {
 
         if (button == nextButton) {
             this.getNextNineSongs();
@@ -510,5 +517,3 @@ public class GUIDisplayWindow {
         }
     }
 }
-
-

@@ -16,88 +16,86 @@ import java.util.Observable;
 import javax.media.NoDataSourceException;
 
 /**
- * @author sampe
- * this is the graphSolver class
+ * @author sampe this is the graphSolver class
  */
 public class GraphSolver {
 
     private LinkedList<Song> playList;
     private int pageCounter;
+    private LinkedList<Student> students;
     private String songFile;
     private String surveyFile;
-/**
- * this is the constructor
- * @param songFile is the file of songs 
- * @param surveyFile is the files of Files
- */
+
+    /**
+     * this is the constructor
+     * 
+     * @param songFile
+     *            is the file of songs
+     * @param surveyFile
+     *            is the files of Files
+     */
     public GraphSolver(String songFile, String surveyFile) {
 
         this.songFile = songFile;
         this.surveyFile = surveyFile;
 
         playList = new LinkedList<Song>();
+        students = new LinkedList<Student>();
         pageCounter = 0;
     }
 
     /**
      * 
-     * @return students that is the 
+     * @return students that is the
      * @version 2017.08.11
      */
-    private LinkedList<Student> readSurveyFile() {
+    public LinkedList<Student> readSurveyFile() {
         int index = 0;
         String line = "";
-        LinkedList<Student> students = null;
 
-        try (BufferedReader br = new BufferedReader(
-                new FileReader(this.surveyFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(this.surveyFile))) {
 
-            students = new LinkedList<Student>();
             while ((line = br.readLine()) != null) {
 
                 String[] responses;
                 // just reading the first row with the column names
                 if (index == 0) {
 
-                    responses = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)",
-                            -1);
+                    responses = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
                 }
                 // survey responses ,
-               
+
                 // everything
 
                 else {
                     responses = line.split(",", -1);
                     Student newStudent = makeStudent(responses);
-                    students.add(newStudent);
+                    this.students.add(newStudent);
 
                 }
 
-                
                 index++;
             }
 
             if (students.isEmpty()) {
                 return null;
             }
-           
-            return students;
-        }
-        catch (IOException e) {
+
+            return this.students;
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
-    
+
     /**
      * this is the songFile reader
      */
-    private void readSongFile() {
+    public void readSongFile() {
         String line = "";
         int index = 0;
-        try (BufferedReader br = new BufferedReader(
-                new FileReader(this.songFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(this.songFile))) {
             while ((line = br.readLine()) != null) {
                 String[] responses;
                 // just reading the first row with the column names
@@ -108,285 +106,131 @@ public class GraphSolver {
                 // everything
                 else {
                     responses = line.split(",", -1);
-                    playList.add(new Song(responses[0], responses[1], responses[3],
-                            responses[2]));
-                } 
+                    playList.add(new Song(responses[0], responses[1], responses[3], responses[2]));
+                }
                 index++;
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     /**
-     * this is the makePlistList which is the public version of the 
-     * make playList
+     * this is the makePlistList which is the public version of the make playList
      */
     public void makePlayList() {
         readSongFile();
     }
-    
+
     /**
      * 
-     * @param row is the row of 
-     * @return newStudent is the type that we get 
+     * @param row
+     *            is the row of
+     * @return newStudent is the type that we get
      */
     private Student makeStudent(String[] row) {
 
-        //int rowNumber = Integer.parseInt(row[0]);
-        Student newStudent = new Student(row[2], row[4], row[3], row[0],
-                row[1]);
+        // int rowNumber = Integer.parseInt(row[0]);
+        Student newStudent = new Student(row[2], row[4], row[3], row[0], row[1]);
         for (int i = 5; i < row.length; i++) {
             newStudent.add(row[i]);
         }
         return newStudent;
 
     }
-    
+
     /**
      * this is the upDateSong class
-     * @param student is the sum
+     * 
+     * @param student
+     *            is the sum
      */
     private void upDateSong(Student student) {
         for (int i = 0; i < playList.size(); i++) {
 
             String answer = student.get((i));
             if (i == student.size() - 1) {
-              
+
             }
             String answer2 = student.get((i + 1));
             int dim = 2;
             String hobby = student.getHobby();
-                    
-            if (student.getHobby().replaceAll("\\s+", "")
-                    .contains("reading")) {
-             
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(1)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(1)
-                            .upDateTotal();
-                }
 
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(1)
-                            .upDateLike();
-                }
+            if (student.getHobby().replaceAll("\\s+", "").contains("reading")) {
 
-            }
-            else if (student.getHobby().replaceAll("\\s+", "")
-                    .contains("sports")) {
-               
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(2)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(2)
-                            .upDateTotal();
-                }
+                yesCheck(answer, answer2, dim, 1, i);
 
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(2)
-                            .upDateLike();
-                }
-            }
-            else if (student.getHobby().replaceAll("\\s+", "")
-                    .contains("art")) {
-              
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(3)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(3)
-                            .upDateTotal();
-                }
+            } else if (student.getHobby().replaceAll("\\s+", "").contains("sports")) {
 
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(3)
-                            .upDateLike();
-                }
-            }
-            else if (student.getHobby().replaceAll("\\s+", "")
-                    .contains("music")) {
-               
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(4)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(4)
-                            .upDateTotal();
-                }
+                yesCheck(answer, answer2, dim, 2, i);
+            } else if (student.getHobby().replaceAll("\\s+", "").contains("art")) {
 
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(4)
-                            .upDateLike();
-                }
-            }
-            else {
-               
+                yesCheck(answer, answer2, dim, 3, i);
+            } else if (student.getHobby().replaceAll("\\s+", "").contains("music")) {
+
+                yesCheck(answer, answer2, dim, 4, i);
+            } else {
+
                 throw new IllegalArgumentException();
             }
 
             // Major
             dim = 1;
-            if (student.getMajor().replaceAll("\\s+", "")
-                    .contains("MathorCMDA")) {
-               
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(1)
-                            .upDateHeard();
+            if (student.getMajor().replaceAll("\\s+", "").contains("MathorCMDA")) {
+
+                yesCheck(answer, answer2, dim, 1, i);
+
+            } else if (student.getMajor().replaceAll("\\s+", "").contains("ComputerScience")) {
+
+                yesCheck(answer, answer2, dim, 2, i);
+            } else if (student.getMajor().replaceAll("\\s+", "").contains("Other")) {
+
+                yesCheck(answer, answer2, dim, 3, i);
+            } else if (student.getMajor().replaceAll("\\s+", "").contains("OtherEngineering")) {
+
+                yesCheck(answer, answer2, dim, 4, i);
+                } else {
+                    throw new IllegalArgumentException();
                 }
+
+                // Location
+                dim = 3;
+                if (student.getState().replaceAll("\\s+", "").contains("Northeast")) {
+
+                    yesCheck(answer, answer2, dim, 1, i);
+                } else if (student.getState().replaceAll("\\s+", "").contains("Southeast")) {
+
+                    yesCheck(answer, answer2, dim, 2, i);
+
+                } else if (student.getState().replaceAll("\\s+", "")
+                        .contains("UnitedStates(otherthanSoutheastorNorthwest)")) {
+
+                    yesCheck(answer, answer2, dim, 3, i);
+                } else if (student.getState().replaceAll("\\s+", "").contains("OutsideofUnitedStates")) {
+
+                    yesCheck(answer, answer2, dim, 4, i);
+                }
+
                 else {
-                    playList.get(i).getDimension(dim).getCategory(1)
-                            .upDateTotal();
+                    throw new IllegalArgumentException();
                 }
-
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(1)
-                            .upDateLike();
-                }
-
-            }
-            else if (student.getMajor().replaceAll("\\s+", "")
-                    .contains("ComputerScience")) {
-                
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(2)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(2)
-                            .upDateTotal();
-                }
-
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(2)
-                            .upDateLike();
-                }
-            }
-            else if (student.getMajor().replaceAll("\\s+", "")
-                    .contains("Other")) {
-               
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(3)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(3)
-                            .upDateTotal();
-                }
-
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(3)
-                            .upDateLike();
-                }
-            }
-            else if (student.getMajor().replaceAll("\\s+", "")
-                    .contains("OtherEngineering")) {
-            
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(4)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(4)
-                            .upDateTotal();
-                }
-
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(4)
-                            .upDateLike();
-                }
-            }
-            else {
-                throw new IllegalArgumentException();
-            }
-
-            // Location
-            dim = 3;
-            if (student.getState().replaceAll("\\s+", "")
-                    .contains("Northeast")) {
-               
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(1)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(1)
-                            .upDateTotal();
-                }
-
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(1)
-                            .upDateLike();
-                }
-
-            }
-            else if (student.getState().replaceAll("\\s+", "")
-                    .contains("Southeast")) {
-               
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(2)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(2)
-                            .upDateTotal();
-                }
-
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(2)
-                            .upDateLike();
-                }
-
-            }
-            else if (student.getState().replaceAll("\\s+", "").contains(
-                    "UnitedStates(otherthanSoutheastorNorthwest)")) {
-                
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(3)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(3)
-                            .upDateTotal();
-                }
-
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(3)
-                            .upDateLike();
-                }
-            }
-            else if (student.getState().replaceAll("\\s+", "")
-                    .contains("OutsideofUnitedStates")) {
-                
-                if (answer.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(4)
-                            .upDateHeard();
-                }
-                else {
-                    playList.get(i).getDimension(dim).getCategory(4)
-                            .upDateTotal();
-                }
-
-                if (answer2.replaceAll("\\s+", "").equalsIgnoreCase("Yes")) {
-                    playList.get(i).getDimension(dim).getCategory(4)
-                            .upDateLike();
-                }
-            }
-            
-            
-            else {              
-                throw new IllegalArgumentException();
             }
         }
 
+    
+    
+    private void yesCheck(String answer, String answer2, int dim, int category, int i) {
+        if (answer.replaceAll("\\s+", "").contains("Yes")) {
+            playList.get(i).getDimension(dim).getCategory(category).upDateHeard();
+            
+        }
+
+        if (answer2.replaceAll("\\s+", "").contains("Yes")) {
+            playList.get(i).getDimension(dim).getCategory(category).upDateLike();
+        }
+
+        playList.get(i).getDimension(dim).getCategory(category).upDateTotal();
     }
 
     /**
@@ -397,38 +241,37 @@ public class GraphSolver {
         try {
             LinkedList<Student> students = readSurveyFile();
             students.remove(84);
-           
+
             for (int i = 0; i < students.size(); i++) {
-                
+
                 upDateSong(students.get(i));
             }
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * this is class which can sort the songs 
-     * @param dimension is the dimension 
+     * this is class which can sort the songs
+     * 
+     * @param dimension
+     *            is the dimension
      */
     public void sortSongs(String dimension) {
         if (dimension.equals("Song")) {
             Collections.sort(playList, new SongComparator());
-        }
-        else if (dimension.equals("Artist")) {
+        } else if (dimension.equals("Artist")) {
             Collections.sort(playList, new ArtistComparator());
-        }
-        else if (dimension.equals("Genre")) {
+        } else if (dimension.equals("Genre")) {
             Collections.sort(playList, new GenreComparator());
-        }
-        else {
+        } else {
             Collections.sort(playList, new YearComparator());
         }
     }
 
     /**
      * this is the class that used to flip the page
+     * 
      * @param direction
      */
     public void flipPage(boolean direction) {
@@ -443,6 +286,7 @@ public class GraphSolver {
 
     /**
      * this is class that getPage
+     * 
      * @return
      */
     public int getPage() {
@@ -451,29 +295,35 @@ public class GraphSolver {
 
     /**
      * 
-     * @param index is the index
-     * @param dimension is the dimension
-     * @param category is the category
-     * @return the percent like 
+     * @param index
+     *            is the index
+     * @param dimension
+     *            is the dimension
+     * @param category
+     *            is the category
+     * @return the percent like
      */
     public double getPercentLike(int index, int dimension, int category) {
-        return playList.get(index).getDimension(dimension).getCategory(category)
-                .getPercentLike();
+        return playList.get(index).getDimension(dimension).getCategory(category).getPercentLike();
     }
 
     /**
      * 
-     * @param index is the index
-     * @param dimension is the dimension
-     * @param category is the category
+     * @param index
+     *            is the index
+     * @param dimension
+     *            is the dimension
+     * @param category
+     *            is the category
      * @return the percent heard
      */
     public double getPercentHeard(int index, int dimension, int category) {
-        return 0;
+        return playList.get(index).getDimension(dimension).getCategory(category).getPercentHeard();
     }
 
     /**
-     * this is class which 
+     * this is class which
+     * 
      * @return playList
      */
     public LinkedList<Song> getPlayList() {
@@ -482,6 +332,7 @@ public class GraphSolver {
 
     /**
      * this is the class
+     * 
      * @return size
      */
     public int getNumberOfSongs() {
