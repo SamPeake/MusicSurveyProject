@@ -6,8 +6,11 @@ package musicsurvey;
 import student.TestCase;
 
 /**
- * @author zichen
- * @version 2017.08.11
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the ArtistCompartore
  */
 public class ArtistComparatorTest extends TestCase {
 
@@ -35,6 +38,6 @@ public class ArtistComparatorTest extends TestCase {
     {
         assertEquals(acom1.compare(song1, song2), 0);
         assertEquals(acom1.compare(song1, song1), 0);
-        assertFalse(acom1.compare(song1, song3) == 0);
+        assertNotSame(acom1.compare(song1, song3), 0);
     }
 }

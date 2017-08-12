@@ -3,11 +3,17 @@ package musicsurvey;
 import java.util.Comparator;
 
 /**
- * @author sampe
- *
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the ArtistCompartore
  */
 public class ArtistComparator implements Comparator<Song> {
 
+    /**
+     * this is the constructor
+     */
     public ArtistComparator() {
         super();
     }

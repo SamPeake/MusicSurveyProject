@@ -4,19 +4,23 @@
 package musicsurvey;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
+//import java.io.File;
+//import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Comparator;
-import java.util.Observable;
+//import java.util.Comparator;
+//import java.util.Observable;
 
-import javax.media.NoDataSourceException;
+//import javax.media.NoDataSourceException;
 
 /**
- * @author sampe this is the graphSolver class
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the ArtistCompartore
  */
 public class GraphSolver {
 
@@ -53,7 +57,8 @@ public class GraphSolver {
         int index = 0;
         String line = "";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(this.surveyFile))) {
+        try (BufferedReader br = 
+                new BufferedReader(new FileReader(this.surveyFile))) {
 
             while ((line = br.readLine()) != null) {
 
@@ -61,7 +66,8 @@ public class GraphSolver {
                 // just reading the first row with the column names
                 if (index == 0) {
 
-                    responses = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                    responses = line.split(",(?=(?:["
+                            + "^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
                 }
                 // survey responses ,
@@ -95,7 +101,8 @@ public class GraphSolver {
     public void readSongFile() {
         String line = "";
         int index = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(this.songFile))) {
+        try (BufferedReader br = new BufferedReader(new 
+                FileReader(this.songFile))) {
             while ((line = br.readLine()) != null) {
                 String[] responses;
                 // just reading the first row with the column names
@@ -106,7 +113,8 @@ public class GraphSolver {
                 // everything
                 else {
                     responses = line.split(",", -1);
-                    playList.add(new Song(responses[0], responses[1], responses[3], responses[2]));
+                    playList.add(new Song(responses[0], 
+                            responses[1], responses[3], responses[2]));
                 }
                 index++;
             }
@@ -117,7 +125,8 @@ public class GraphSolver {
     }
 
     /**
-     * this is the makePlistList which is the public version of the make playList
+     * this is the makePlistList which is the
+     *  public version of the make playList
      */
     public void makePlayList() {
         readSongFile();
@@ -132,7 +141,8 @@ public class GraphSolver {
     private Student makeStudent(String[] row) {
 
         // int rowNumber = Integer.parseInt(row[0]);
-        Student newStudent = new Student(row[2], row[4], row[3], row[0], row[1]);
+        Student newStudent = new Student(row[2], row[4],
+                row[3], row[0], row[1]);
         for (int i = 5; i < row.length; i++) {
             newStudent.add(row[i]);
         }
@@ -150,84 +160,111 @@ public class GraphSolver {
         for (int i = 0; i < playList.size(); i++) {
 
             String answer = student.get((i));
-            if (i == student.size() - 1) {
-
-            }
+           
             String answer2 = student.get((i + 1));
             int dim = 2;
-            String hobby = student.getHobby();
+            //String hobby = student.getHobby();
 
             if (student.getHobby().replaceAll("\\s+", "").contains("reading")) {
 
                 yesCheck(answer, answer2, dim, 1, i);
 
-            } else if (student.getHobby().replaceAll("\\s+", "").contains("sports")) {
+            } 
+            else if (student.getHobby().replaceAll("\\s+", "")
+                    .contains("sports")) {
 
                 yesCheck(answer, answer2, dim, 2, i);
-            } else if (student.getHobby().replaceAll("\\s+", "").contains("art")) {
+            } 
+            else if (student.getHobby().replaceAll("\\s+", "")
+                    .contains("art")) {
 
                 yesCheck(answer, answer2, dim, 3, i);
-            } else if (student.getHobby().replaceAll("\\s+", "").contains("music")) {
+            } 
+            else if (student.getHobby().replaceAll("\\s+", "")
+                    .contains("music")) {
 
                 yesCheck(answer, answer2, dim, 4, i);
-            } else {
+            } 
+            else {
 
                 throw new IllegalArgumentException();
             }
 
             // Major
             dim = 1;
-            if (student.getMajor().replaceAll("\\s+", "").contains("MathorCMDA")) {
+            if (student.getMajor().replaceAll("\\s+", "")
+                    .contains("MathorCMDA")) {
 
                 yesCheck(answer, answer2, dim, 1, i);
 
-            } else if (student.getMajor().replaceAll("\\s+", "").contains("ComputerScience")) {
+            } 
+            else if (student.getMajor().
+                    replaceAll("\\s+", "").contains("ComputerScience")) {
 
                 yesCheck(answer, answer2, dim, 2, i);
-            } else if (student.getMajor().replaceAll("\\s+", "").contains("Other")) {
+            } 
+            else if (student.getMajor().
+                    replaceAll("\\s+", "").contains("Other")) {
 
                 yesCheck(answer, answer2, dim, 3, i);
-            } else if (student.getMajor().replaceAll("\\s+", "").contains("OtherEngineering")) {
+            } 
+            else if (student.getMajor().
+                    replaceAll("\\s+", "").contains("OtherEngineering")) {
 
                 yesCheck(answer, answer2, dim, 4, i);
-                } else {
-                    throw new IllegalArgumentException();
-                }
+            } 
+            else {
+                throw new IllegalArgumentException();
+            }
 
-                // Location
-                dim = 3;
-                if (student.getState().replaceAll("\\s+", "").contains("Northeast")) {
+            // Location
+            dim = 3;
+            if (student.getState().replaceAll("\\s+", "")
+                    .contains("Northeast")) {
 
-                    yesCheck(answer, answer2, dim, 1, i);
-                } else if (student.getState().replaceAll("\\s+", "").contains("Southeast")) {
+                yesCheck(answer, answer2, dim, 1, i);
+            } 
+            else if (student.getState().replaceAll("\\s+", "")
+                    .contains("Southeast")) {
 
-                    yesCheck(answer, answer2, dim, 2, i);
+                yesCheck(answer, answer2, dim, 2, i);
 
-                } else if (student.getState().replaceAll("\\s+", "")
-                        .contains("UnitedStates(otherthanSoutheastorNorthwest)")) {
+            } 
+            else if (student.getState().replaceAll("\\s+", "")
+                    .contains("UnitedStates(otherthanSoutheastorNorthwest)")) {
 
-                    yesCheck(answer, answer2, dim, 3, i);
-                } else if (student.getState().replaceAll("\\s+", "").contains("OutsideofUnitedStates")) {
+                yesCheck(answer, answer2, dim, 3, i);
+            }
+            else if (student.getState().replaceAll("\\s+", "")
+                    .contains("OutsideofUnitedStates")) {
 
-                    yesCheck(answer, answer2, dim, 4, i);
-                }
+                yesCheck(answer, answer2, dim, 4, i);
+            }
 
-                else {
-                    throw new IllegalArgumentException();
-                }
+            else {
+                throw new IllegalArgumentException();
             }
         }
-
-    
-    
-    private void yesCheck(String answer, String answer2, int dim, int category, int i) {
+    }
+    /**
+     * This is yesCheck method
+     * @param answer parameter for answer
+     * @param answer2 parameter for answer2
+     * @param dim parameter for dim
+     * @param category parameter for category
+     * @param i parameter for i
+     */
+    private void yesCheck(String answer, String answer2, 
+            int dim, int category, int i) {
         if (answer.replaceAll("\\s+", "").contains("Yes")) {
-            playList.get(i).getDimension(dim).getCategory(category).upDateHeard();
-            
+            playList.get(i).
+            getDimension(dim).getCategory(category).upDateHeard();
+
         }
 
         if (answer2.replaceAll("\\s+", "").contains("Yes")) {
-            playList.get(i).getDimension(dim).getCategory(category).upDateLike();
+            playList.
+            get(i).getDimension(dim).getCategory(category).upDateLike();
         }
 
         playList.get(i).getDimension(dim).getCategory(category).upDateTotal();
@@ -239,40 +276,45 @@ public class GraphSolver {
     public void upDatePlayList() {
 
         try {
-            LinkedList<Student> students = readSurveyFile();
-            students.remove(84);
+            LinkedList<Student> studentss = readSurveyFile();
+            studentss.remove(84);
 
-            for (int i = 0; i < students.size(); i++) {
+            for (int i = 0; i < studentss.size(); i++) {
 
-                upDateSong(students.get(i));
+                upDateSong(studentss.get(i));
             }
-        } catch (IllegalArgumentException e) {
+        } 
+        catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * this is class which can sort the songs
-     * 
-     * @param dimension
-     *            is the dimension
+     * this is the 
+     * @param sortType is the int 
      */
-    public void sortSongs(String dimension) {
-        if (dimension.equals("Song")) {
+    public void sortSongs(int sortType) {
+        if (sortType == 1) {
             Collections.sort(playList, new SongComparator());
-        } else if (dimension.equals("Artist")) {
+        } 
+        else if (sortType == 2) {
             Collections.sort(playList, new ArtistComparator());
-        } else if (dimension.equals("Genre")) {
+        } 
+        else if (sortType == 3) {
+        
             Collections.sort(playList, new GenreComparator());
-        } else {
+        } 
+        else {
+           
             Collections.sort(playList, new YearComparator());
+            
         }
     }
 
     /**
      * this is the class that used to flip the page
      * 
-     * @param direction
+     * @param direction is the
      */
     public void flipPage(boolean direction) {
         if (direction) {
@@ -287,7 +329,7 @@ public class GraphSolver {
     /**
      * this is class that getPage
      * 
-     * @return
+     * @return pageCount is the 
      */
     public int getPage() {
         return pageCounter;
@@ -304,7 +346,8 @@ public class GraphSolver {
      * @return the percent like
      */
     public double getPercentLike(int index, int dimension, int category) {
-        return playList.get(index).getDimension(dimension).getCategory(category).getPercentLike();
+        return playList.get(index).getDimension(dimension).
+                getCategory(category).getPercentLike();
     }
 
     /**
@@ -318,13 +361,14 @@ public class GraphSolver {
      * @return the percent heard
      */
     public double getPercentHeard(int index, int dimension, int category) {
-        return playList.get(index).getDimension(dimension).getCategory(category).getPercentHeard();
+        return playList.get(index).getDimension(dimension).
+                getCategory(category).getPercentHeard();
     }
 
     /**
      * this is class which
      * 
-     * @return playList
+     * @return playList this is the 
      */
     public LinkedList<Song> getPlayList() {
         return playList;
@@ -333,7 +377,7 @@ public class GraphSolver {
     /**
      * this is the class
      * 
-     * @return size
+     * @return size this is the 
      */
     public int getNumberOfSongs() {
         return playList.size();

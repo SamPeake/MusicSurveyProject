@@ -6,31 +6,16 @@ package musicsurvey;
 import student.TestCase;
 
 /**
- * @author zichen
- *
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the 
  */
 public class SongTest extends TestCase {
 
     private Song song1;
-    private Dimension major;
-    private Dimension hobby;
-    private Dimension location;
-    private Category Math;
-    private Category CS;
-    private Category Engi;
-    private Category Other;
-    private Student wendy;
-    private Dimension dimension1;
-    private Category read;
-    private Category art;
-    private Category sports;
-    private Category music;
-    private Category location1;
-    private Category location2;
-    private Category location3;
-    private Category location4;
 
-    // private Dimension dimension1;
 
     /**
      * this is the setUp
@@ -38,12 +23,7 @@ public class SongTest extends TestCase {
     @Override
     public void setUp() {
         song1 = new Song("CallMeMaybe", "Carly", "pop", "2011");
-        // major = new Dimension(Math, CS, Engi, Other);
-        hobby = new Dimension(read, art, sports, music);
-        location = new Dimension(location1, location2, location3, location4);
-        major = new Dimension(Math, CS, Engi, Other);
-        wendy = new Student("Math", "read", "Northeast US", "7",
-                "6/12/2016 10:22:25");
+       
 
     }
 
@@ -97,6 +77,9 @@ public class SongTest extends TestCase {
         // assertEquals(location, song1.getDimension(3));
         // assertEquals(major, song1.getDimension(4));
 
+        String str = "Song Name: CallMeMaybe" + "\n" + "Song Artist: Carly"
+                + "\n" + "Song Genre: pop" + "\n" + "Song Year: 2011";
+        assertEquals(str, song1.toString());
     }
 
 }

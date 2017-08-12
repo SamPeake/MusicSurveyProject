@@ -7,16 +7,19 @@ package musicsurvey;
 import student.TestCase;
 
 /**
- * @author zichen
- *
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the ArtistCompartore
  */
 public class GraphSolverTest extends TestCase {
 
     // fields...............................
     private GraphSolver solver1;
-    private GraphSolver solver2;
-    private GraphSolver solver3;
-    private int pageCounter;
+    //  private GraphSolver solver2;
+    //private GraphSolver solver3;
+    //  private int pageCounter;
 
     /**
      * this method should get ready all the files
@@ -25,7 +28,7 @@ public class GraphSolverTest extends TestCase {
     public void setUp() {
         solver1 = new GraphSolver("SongList2016S.csv",
                 "MusicSurveyData2016S.csv");
-        pageCounter = 0;
+        //pageCounter = 0;
         solver1.readSurveyFile();
 
         solver1.makePlayList();
@@ -51,6 +54,7 @@ public class GraphSolverTest extends TestCase {
      */
     public void testUpDatePlayList() {
         solver1.upDatePlayList();
+        assertEquals(59, solver1.getNumberOfSongs());
     }
 
     /**
@@ -59,15 +63,15 @@ public class GraphSolverTest extends TestCase {
     public void testSortSongs() {
 
         solver1.readSongFile();
-        solver1.sortSongs("Song");
+        solver1.sortSongs(1);
         // System.out.println(solver1.getPlayList().removeFirst().toString());
         String str = "Song Name: All These Things I've Done\n"
                 + "Song Artist: The Killers\n" + "Song Genre: alternative\n"
                 + "Song Year: 2005";
         assertEquals(str, solver1.getPlayList().removeFirst().toString());
-        solver1.sortSongs("Artist");
-        solver1.sortSongs("Genre");
-        solver1.sortSongs("as");
+        solver1.sortSongs(2);
+        solver1.sortSongs(3);
+        solver1.sortSongs(4);
         // System.out.println(solver1.getPlayList().removeFirst().toString());
     }
 

@@ -6,15 +6,17 @@ package musicsurvey;
 import student.TestCase;
 
 /**
- * @author zichen
- * @versio 2017.08.06
- *
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the ArtistCompartore
  */
 public class CategoryTest extends TestCase {
 
     
     private Category cate1;
-    private Category cate2;
+    //private Category cate2;
     
     /**
      * this is the set up 
@@ -53,7 +55,7 @@ public class CategoryTest extends TestCase {
         cate1.upDateTotal();
         //assertEquals(1, cate1.getTotal());
         cate1.upDateTotal();
-        //assertEquals(2, cate1.getTotal());
+        assertEquals(0, cate1.getNumbeOfHeard());
     }
     
     /**
@@ -63,7 +65,8 @@ public class CategoryTest extends TestCase {
     {
         cate1.upDateLike();
         cate1.upDateTotal();
-        assertTrue(0.5 == cate1.getPercentLike());
+        System.out.println(cate1.getPercentLike());
+        assertEquals(1.0, cate1.getPercentLike(), 0.00001);
         //assertEquals(2, cate1.getTotal());
     }
     
@@ -74,7 +77,8 @@ public class CategoryTest extends TestCase {
     {
         cate1.upDateHeard();
         cate1.upDateTotal();
-        assertTrue(0.5 == cate1.getPercentHeard());
+        //assertTrue(1.0 == cate1.getPercentHeard());
+        assertEquals(1, cate1.getPercentHeard(), 0.001);
        // assertEquals(2, cate1.getTotal());
     }
     
@@ -85,8 +89,8 @@ public class CategoryTest extends TestCase {
      */
     public void testGetPercentLike2()
     {
-        assertEquals(0, cate2.getNumbeOfLikes());
-        assertEquals(0.0, cate2.getPercentLike(), 0.0001);
+        assertEquals(0, cate1.getNumbeOfLikes());
+        assertEquals(0.0, cate1.getPercentLike(), 0.0001);
     }
     
     /**
@@ -96,8 +100,8 @@ public class CategoryTest extends TestCase {
      */
     public void testGetPercentHeard2()
     {
-        assertEquals(0, cate2.getNumbeOfHeard());
-        assertEquals(0.0, cate2.getPercentHeard(), 0.0001);
+        assertEquals(0, cate1.getNumbeOfHeard());
+        assertEquals(0.0, cate1.getPercentHeard(), 0.0001);
     }
     
     

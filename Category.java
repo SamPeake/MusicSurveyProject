@@ -4,8 +4,11 @@
 package musicsurvey;
 
 /**
- * @author zichen
- * @version 2017.08.05
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the Category
  */
 public class Category {
 
@@ -26,7 +29,7 @@ public class Category {
      * @param numberofLike
      */
     public Category() {
-    
+
         numberofHeard = 0;
         numberofLike = 0;
         totalNumberLike = 0;
@@ -38,7 +41,7 @@ public class Category {
      */
     public void upDateLike() {
         numberofLike = numberofLike + 1;
-        
+
     }
 
     /**
@@ -55,7 +58,7 @@ public class Category {
      */
     public void upDateHeard() {
 
-        numberofHeard = numberofHeard + 1;
+        numberofHeard++;
     }
 
     /**
@@ -69,13 +72,12 @@ public class Category {
 
     /**
      * 
-     * @return
+     * @return totalNumberHeard is the number of 
      */
     public int getTotalHeard() {
         return totalNumberHeard;
     }
-    
-    
+
     /**
      * @return the number of likes
      */
@@ -95,9 +97,10 @@ public class Category {
      * 
      */
     public double getPercentLike() {
-        if (totalNumberLike == 0 && numberofLike == 0) {
+        if (totalNumberLike == 0) {
             return 0;
-        } else {
+        } 
+        else {
             double percentLike = (double) numberofLike / totalNumberLike;
             return percentLike;
         }
@@ -107,15 +110,13 @@ public class Category {
      * @return the percentage of likes
      */
     public double getPercentHeard() {
-        if(totalNumberHeard == 0 && numberofHeard == 0)
-        {
+        if (totalNumberHeard == 0) {
             return 0;
-        }
-        else
-        {
-        double percentHeard = (double) numberofHeard / totalNumberHeard;
-        return percentHeard;
+        } 
+        else {
+            double percentHeard = (double) numberofHeard / totalNumberHeard;
+            return percentHeard;
+
         }
     }
-
 }

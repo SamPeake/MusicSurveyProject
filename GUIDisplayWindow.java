@@ -12,7 +12,11 @@ import CS2114.Window;
 import CS2114.WindowSide;
 
 /**
- * @author zichen
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the 
  *
  */
 public class GUIDisplayWindow {
@@ -33,12 +37,14 @@ public class GUIDisplayWindow {
     private final int LEGEND_GAP = 10;
 
     /**
-     * this is the constructor forDisPlayWindow
+     * this is the constructor for DisPlayWindow
      */
     public GUIDisplayWindow(GraphSolver solver) {
         this.solver = solver;
         dimension = 0;
         window = new Window("Music Visualization");
+        window.setSize(1000, 1000);
+     
 
         solver.makePlayList();
         solver.upDatePlayList();
@@ -66,13 +72,15 @@ public class GUIDisplayWindow {
         window.addButton(dateButton, WindowSide.NORTH);
         dateButton.onClick(this, "clickSort");
 
-        nextButton = new Button("Next ->");
-        window.addButton(nextButton, WindowSide.NORTH);
-        nextButton.onClick(this, "clickedPage");
+      
 
         genreButton = new Button("Genre");
         window.addButton(genreButton, WindowSide.NORTH);
         genreButton.onClick(this, "clickSort");
+        
+        nextButton = new Button("Next ->");
+        window.addButton(nextButton, WindowSide.NORTH);
+        nextButton.onClick(this, "clickedPage");
 
         // Dimensions
         hobbyButton = new Button("Hobby");
@@ -101,7 +109,7 @@ public class GUIDisplayWindow {
     }
 
     /**
-     * this method is used to display the window
+     * this method is used to get the window
      */
     public Window getWindow() {
         return window;
@@ -117,12 +125,12 @@ public class GUIDisplayWindow {
             int j = i + 1;
             Position column;
             Position row;
-            if ((j % 3) == 0) {
+            if ((i % 3) == 0) {
                 column = Position.FrontEnum;
-            } else if ((j % 2) == 0) {
-                column = Position.MiddleEnum;
-            } else {
+            } else if ((i % 2) == 0) {
                 column = Position.BackEnum;
+            } else {
+                column = Position.MiddleEnum;
             }
 
             if (j > 6) {
@@ -255,43 +263,43 @@ public class GUIDisplayWindow {
             rowFactor = 3;
         }
 
+        
         genre.setText(solver.getPlayList().get(index).getGenre());
-        x = (window.getGraphPanelWidth() * (columnFactor / 6)) - (genre.getWidth() / 2);
-        x = -x;
-        y = (window.getGraphPanelHeight() * (rowFactor / 6)) - title.getHeight() - this.LEGEND_GAP;
+        x = (int)(window.getGraphPanelWidth() * (columnFactor  / 6.0)) - (int)(genre.getWidth() / 2.0);
+        y = (int)(window.getGraphPanelHeight() * (rowFactor / 6.0)) - title.getHeight() - this.LEGEND_GAP;
 
-        y = -y;
-        System.out.println(y);
-        genre.setY(y);
-        System.out.println(genre.getText());
-        window.addShape(genre);
-        window.moveToFront(genre);
-
-        year.setText(solver.getPlayList().get(index).getYear() + "");
-        x = (window.getGraphPanelWidth() * (columnFactor / 6)) - (year.getWidth() / 2);
+        
        
-        y = y - year.getHeight();
+        genre.setX(x);
+        genre.setY(y);
+        window.addShape(genre);
+       
+
+        year.setText(solver.getPlayList().get(index).getYear());
+        x = (int)(window.getGraphPanelWidth() * (columnFactor / 6.0)) - (int)(year.getWidth() / 2.0);
+       
+        y = y - year.getHeight() - 20;
        
         year.setX(x);
         year.setY(y);
         window.addShape(year);
-        window.moveToFront(year);
+     
 
         artist.setText(solver.getPlayList().get(index).getArtist());
-        x = (window.getGraphPanelWidth() * (columnFactor / 6)) - (artist.getWidth() / 2);
-        y = y + artist.getHeight();
+        x = (int)(window.getGraphPanelWidth() * (columnFactor / 6.0)) - (int)(artist.getWidth() / 2.0);
+        y = y - artist.getHeight() - 20;
         artist.setX(x);
         artist.setY(y);
         window.addShape(artist);
-        window.moveToFront(artist);
+        
 
         title.setText(solver.getPlayList().get(index).getSongName());
-        x = (window.getGraphPanelWidth() * (columnFactor / 6)) - (title.getWidth() / 2);
-        y = y + title.getHeight();
+        x = (int)(window.getGraphPanelWidth() * (columnFactor / 6.0)) - (int)(title.getWidth() / 2);
+        y = y - title.getHeight() - 20;
         title.setX(x);
         title.setY(y);
         window.addShape(title);
-        window.moveToFront(title);
+        
     }
 
     private void placeGraph(Position column, Position row, int index) {
@@ -475,20 +483,20 @@ public class GUIDisplayWindow {
     public void clickSort(Button button) {
         if (button == titleButton) {
             window.removeAllShapes();
-            solver.sortSongs("Song");
+            solver.sortSongs(1);
             fillWindow();
         } else if (button == artistButton) {
             window.removeAllShapes();
-            solver.sortSongs("Artist");
+            solver.sortSongs(2);
             fillWindow();
 
-        } else if (button == dateButton) {
+        } else if (button == genreButton) {
             window.removeAllShapes();
-            solver.sortSongs("Year");
+            solver.sortSongs(3);
             fillWindow();
-        } else {
+        } else  if (button == dateButton){
             window.removeAllShapes();
-            solver.sortSongs("Genre");
+            solver.sortSongs(4);
             fillWindow();
         }
     }

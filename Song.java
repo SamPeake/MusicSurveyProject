@@ -6,9 +6,11 @@ package musicsurvey;
 //import java.util.Comparator;
 
 /**
- * @author zichen
- * @version 2017.08.05
- *
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the 
  */
 public class Song extends Category {
 
@@ -110,21 +112,6 @@ public class Song extends Category {
         columnLike = newColumn;
     }
 
-    /**
-     * @param str is the string 
-     * @return either the major or major ot location 
-     */
-    public Dimension getDimension(String str) {
-        if (str.equals("major")) {
-            return major;
-        } 
-        else if (str.equals("hobby")) {
-            return hobby;
-        } 
-        else {
-            return location;
-        }
-    }
 /**
  * 
  * @param dimension is the dimension

@@ -6,11 +6,14 @@ package musicsurvey;
 import student.TestCase;
 
 /**
- * @author zichen
- * @version 2017.08.07
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the 
  *
  */
-public class StudentTest extends TestCase{
+public class StudentTest extends TestCase {
 
     private Student wendy;
     

@@ -6,8 +6,11 @@ package musicsurvey;
 import student.TestCase;
 
 /**
- * @author zichen
- * @version 2017.08.06
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the 
  */
 public class DimensionTest extends TestCase {
 

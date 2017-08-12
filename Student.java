@@ -5,11 +5,13 @@ package musicsurvey;
 import java.util.LinkedList;
 
 /**
- * @author zichen
- * @version 2017.08.07
- *
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the 
  */
-public class Student extends LinkedList<String>{
+public class Student extends LinkedList<String> {
 
     //fields.....................................
     private String major;
@@ -19,7 +21,12 @@ public class Student extends LinkedList<String>{
     private String time;
     
     /**
-     * this is the constructor
+     * this is the
+     * @param major is the major
+     * @param hobby is the hobby
+     * @param state is the state
+     * @param rowNumber is the towUmber
+     * @param time is the time
      */
     public Student(String major, String hobby, 
             String state, String rowNumber, String time)
@@ -78,6 +85,7 @@ public class Student extends LinkedList<String>{
     
     /**
      * this method is used to get the String of Student's infomaton
+     * @return the  string 
      */
     public String toString()
     {

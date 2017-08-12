@@ -4,8 +4,11 @@
 package musicsurvey;
 
 /**
- * @author sampe
- *
+ * @author Sam Peake (samp97)
+ * @author zichen zhu (zichen)
+ * @author Hytham soueid (hythams8)
+ * @version 2017.08.10
+ * this is the 
  */
 public class ProjectRunner {
 
